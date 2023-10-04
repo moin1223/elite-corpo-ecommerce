@@ -63,7 +63,7 @@ class User extends Authenticatable
 
     public function userDetails()
     {
-        return $this->hasOne(userDetails::class);
+        return $this->hasOne(UserDetails::class);
     }
 
 }
