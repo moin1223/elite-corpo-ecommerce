@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\UserDataRepository;
 use Spatie\Permission\Models\Role;
+use Exception;
+use Xenon\LaravelBDSms\Provider\Mobireach;
+use Xenon\LaravelBDSms\Sender;
 
 class UserController extends Controller
 {
@@ -21,25 +24,25 @@ class UserController extends Controller
     {
         $groupName = $request->input('group_name');
 
-        // $users = UserDetails::with('user')->whereHas('group', function ($query) use ($groupName) {
-        //     $query->where('name', $groupName);
-        // })->get(); 
-        $users = UserDetails::with('user')
-    ->whereHas('group', function ($query) use ($groupName) {
-        $query->where('name', 'like', '%' . $groupName . '%');
-    })
-    ->paginate(10)
-    ->appends($request->all());
-    //  $users = User:: all();
-     return view('website.user.list', compact('users'));
+        $usersQuery = UserDetails::with('user');
+
+        if ($groupName) {
+            $usersQuery->whereHas('group', function ($query) use ($groupName) {
+                $query->where('name', 'like', '%' . $groupName . '%');
+            });
+        }
+
+        $users = $usersQuery->paginate(10)->appends($request->all());
+        //  $users = User:: all();
+        return view('website.user.list', compact('users'));
     }
     public function show(User $user)
     {
         // dd($user);
-    // $user = User::findOrfail($user); 
-    $userDetails = UserDetails::with('division', 'district', 'thana', 'group')->where('user_id', $user->id)->firstOrfail();
-    // dd($userDetails);
-     return view('website.user.show', compact('user', 'userDetails'));
+        // $user = User::findOrfail($user); 
+        $userDetails = UserDetails::with('division', 'district', 'thana', 'group')->where('user_id', $user->id)->firstOrfail();
+        // dd($userDetails);
+        return view('website.user.show', compact('user', 'userDetails'));
     }
     public function destroy(User $user)
     {
@@ -57,7 +60,7 @@ class UserController extends Controller
     public function getRequestedUserDetails()
     {
         $user_id = request('user_id');
-        $requestedUser = RequestedUser::with('division', 'district', 'thana','group')->findOrfail($user_id);
+        $requestedUser = RequestedUser::with('division', 'district', 'thana', 'group')->findOrfail($user_id);
         return response()->json($requestedUser);
     }
     public function acceptUserRegisterRequest(Request $request)
@@ -70,7 +73,7 @@ class UserController extends Controller
             'first_name' => $requestedUser->first_name,
             'last_name' => $requestedUser->last_name,
             'email' => $requestedUser->email,
-            'password' =>$requestedUser->password,
+            'password' => $requestedUser->password,
         ]);
         UserDetails::create([
             'gender' => $requestedUser->gender,
@@ -93,6 +96,23 @@ class UserController extends Controller
         if ($role) {
             $user->assignRole($role);
         }
+        try {
+            $sender = Sender::getInstance();
+            $sender->setProvider(Mobireach::class);
+            $sender->setMobile('8801840010215');
+            $sender->setMessage('helloooooooo boss!');
+            $sender->setConfig(
+                [
+                    'Username' => 'elitecor',
+                    'Password' => '3Kaieschy-78',
+                    'From' => 'Elite Corpo'
+                ]
+            );
+            $status = $sender->send();
+        } catch (Exception $e) {
+
+            echo 'Error: ' . $e->getMessage();
+        }
 
         return redirect()->back()->with(['message' => 'User Register Request Accepted', 'alert-type' => 'success']);
     }
@@ -102,5 +122,4 @@ class UserController extends Controller
         $requestedUser->delete();
         return redirect()->back()->with(['message' => 'User Register Request Cancel', 'alert-type' => 'success']);
     }
-    
 }

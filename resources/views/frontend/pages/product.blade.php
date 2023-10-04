@@ -23,12 +23,13 @@
                                 <div class="card-body pt-3 ps-4">
                                     <h5 class="card-title text-uppercase fw-bold mb-2 border-bottom pb-2">
                                         {{ $single_product->product_name }}</h5>
-                                    <p class="text-muted mt-2 mb-0">{{$single_product->weight}}gm</p>
+                                    <p class="text-muted mt-2 mb-0">{{ $single_product->weight }}gm</p>
                                     <p class="card-text mb-0 text-decoration-line-through d-inline text-danger">
                                         {{ $single_product->old_price }}TK</p><span
                                         class='ms-2 fs-4'>{{ $single_product->new_price }}Tk</span>
                                     <div class="mt-3">
-                                        <a href="{{ route('product-review', $single_product->id) }}" class="btn btn-dark px-4 py-2">Review</a>
+                                        <a href="{{ route('product-review', $single_product->id) }}"
+                                            class="btn btn-dark px-4 py-2">Review</a>
                                     </div>
                                 </div>
                             </div>
@@ -41,13 +42,13 @@
 
     </section>
     {{-- about us --}}
-    <section id="about">
+    <section id="about" class="container">
         <h3 class="text-center fs-2 fw-bold mt-5">About Us</h3>
         <div class="row p-2 mt-4">
-            <div class="col-12 col-lg">
+            <div class="col-12 col-lg-6">
                 <img class="w-100" src="./frontend/images/about.jpg" alt="">
             </div>
-            <div class="col-12 col-lg px-2 pt-2 px-4 mt-5 mt-lg-0">
+            <div class="col-12 col-lg-6 px-2 pt-2 px-lg-4 mt-5 mt-lg-0">
                 <p class="fs-5">
                     Welcome to Elite Corporation.
                     Elite Corporation is mainly supplying health, cosmetic and spice products all over Bangladesh. <br>
@@ -68,8 +69,6 @@
             </div>
         </div>
     </section>
-
-
 @endsection
 
 @section('content-js')

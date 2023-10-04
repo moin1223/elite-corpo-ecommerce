@@ -2,12 +2,12 @@
 <nav class="sidebar dark_sidebar">
     <div class="logo d-flex justify-content-between">
         <a class="large_logo" href="index.html">
-            <img class="ms-5" src="{{ asset('/website/img/logo_white.png') }}" alt="Dream-Walkers" style="width: 150px; height: auto;">
+            <img class="ms-5" src="{{ asset('/frontend/images/elit-logo.jpg') }}" alt="Dream-Walkers" style="width: 100px; height: auto;">
 
             
         </a>
         <a class="small_logo" href="index.html">
-            <img src={{ asset('/website/img/mini_logo.png') }} alt="Dream-Walkers" style="width: 50px; height: auto;">
+            <img src={{ asset('/frontend/images/elit-logo.jpg') }} alt="Dream-Walkers" style="width: 50px; height: auto;">
         </a>
         <div class="sidebar_close_icon d-lg-none">
             <i class="ti-close"></i>
