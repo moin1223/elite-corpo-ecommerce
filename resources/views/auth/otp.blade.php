@@ -8,7 +8,7 @@
             border-radius: 20px;
             background: #fff;
             border: 1px solid red;
-            height: 400px;
+            height: 490px;
             position: relative;
         }
 
@@ -70,7 +70,7 @@
                 <span class="d-block mobile-text">
                     Don't receive the code?
                 </span>
-                <span class="font-weight-bold text-danger cursor resend">Resend</span>
+                <span class="font-weight-bold text-danger cursor resend" onclick="resend()">Resend</span>
             </div>
         </div>
     </div>
@@ -85,14 +85,16 @@
             // Check if timer value is stored in local storage
             var timeLeft = localStorage.getItem('timerValue');
             if (timeLeft === null) {
-                timeLeft = 60; // Set initial timer value to 60 if not found in local storage
+                timeLeft = 120; // Set initial timer value to 60 if not found in local storage
             } else {
                 timeLeft = parseInt(timeLeft);
             }
 
             // Function to update timer
             function updateTimer() {
-                timerElement.text("0: " + timeLeft);
+                var minute = Math.floor(timeLeft / 60);
+                var second = timeLeft % 60;
+                timerElement.text(minute + " : " + second);
                 timeLeft--;
 
                 // Save timer value in local storage
@@ -162,9 +164,20 @@
             });
         })
 
-
-        function buttonClick() {
-            $("#user_phone_number").text($("#mobile_number").val());
+        function resend() {
+            $.ajax({
+                url: "{{ route('resendOtp') }}",
+                type: 'GET',
+                data: {
+                    contact_no: {{ $contact_no }}
+                },
+                success: function(response) {
+                    //
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors here
+                }
+            });
         }
     </script>
 @endsection

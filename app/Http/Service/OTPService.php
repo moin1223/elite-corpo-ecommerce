@@ -36,17 +36,19 @@ class OTPService
         return OTPGeneration::create([
             'contact_no' => $contact_no,
             'otp' => $otp,
-            'expire_at' => Carbon::now()->addSeconds(60)
+            'expire_at' => Carbon::now()->addSeconds(120)
         ]);
     }
 
     public function verifyOtp($request)
     {
+        $REQ_contact_no = '0' . $request->contact_no;
+        $REQ_otp = $request->otp;
         $result = false;
         $message = '';
         $storedOtp = OTPGeneration::where([
-            ['contact_no', $request->contact_no],
-            ['otp', $request->otp],
+            ['contact_no', $REQ_contact_no],
+            ['otp', $REQ_otp],
         ])->latest()->first();
 
         if ($storedOtp) {

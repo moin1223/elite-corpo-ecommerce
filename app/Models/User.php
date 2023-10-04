@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\userDetails;
+use App\Models\UserDetails;
 
 
 class User extends Authenticatable
@@ -63,7 +63,7 @@ class User extends Authenticatable
 
     public function userDetails()
     {
-        return $this->hasOne(userDetails::class);
+        return $this->hasOne(UserDetails::class);
     }
 
 }
