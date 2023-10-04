@@ -102,6 +102,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::prefix('otp')->group(function () {
     Route::get('send', [OtpController::class, 'sendOtp'])->name("sendOtp");
+    Route::get('resend', [OtpController::class, 'resendOtp'])->name("resendOtp");
     Route::get('verify', [OtpController::class, 'verifyOtp'])->name("verifyOtp");
 });
 
