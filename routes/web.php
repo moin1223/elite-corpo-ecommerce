@@ -32,6 +32,7 @@ Route::get('/', function () {
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/check-authenticity', 'checkAuthenticity')->name('check-authenticity');
     Route::post('/check-code-authenticity', 'checkCodeAuthenticity')->name('check-code-authenticity');
+    Route::get('/check-code-authenticity-ajax', 'checkCodeAuthenticityAjax')->name('check-code-authenticity-ajax');
     Route::get('/home-page', 'homePage')->name('home-page');
     Route::get('/products', 'product')->name('product-page');
     Route::get('/contact-us', 'contactUs')->name('contact-us');

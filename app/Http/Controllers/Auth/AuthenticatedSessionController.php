@@ -22,6 +22,10 @@ class AuthenticatedSessionController extends Controller
     {
         return view('auth.login');
     }
+    public function userLogin()
+    {
+        return view('auth.user-login');
+    }
 
     /**
      * Handle an incoming authentication request.
@@ -29,27 +33,6 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
 
-        if($request->role == 'user')
-        {
-            $this->validate($request,[
-                 'mobile_number' =>'required',
-                 'password' =>'required'
-            ]);
-            $user = User::where('mobile_number', $request->mobile_no)->first();
-            if($user){
-                if($user->mobile_number != $request->mobile_no && $user->password != $request->password)
-                {
-                 return back()->with('error','User credentail incorrect!');
-                }
-           
-            }
-
-            else{
-                return back()->with('error','phone number not registered!');
-            }
-            Auth::login($user);
-            return redirect('/home-page'); 
-        }
         // Check the director accept the user
         // $checkIfTheUserIsAccepted = RequestedUser::where([['email', $request->email], ['status', 0]])->first();
         // if ($checkIfTheUserIsAccepted) {

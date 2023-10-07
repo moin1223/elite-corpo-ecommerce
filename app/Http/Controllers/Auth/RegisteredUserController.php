@@ -55,7 +55,7 @@ class RegisteredUserController extends Controller
             $user = User::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
-                'password' => $request->password,
+                'password' => Hash::make($request->password),
             ]);
             UserDetails::create([
                 'gender' => $request->gender,
@@ -73,15 +73,41 @@ class RegisteredUserController extends Controller
             return redirect()->back()->with(['message' => 'You are regitered!', 'alert-type' => 'success']);
         
         }
+        if($request->role === 'seller')
+        {
+            $request->validate([
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['required', 'string', 'max:255'],
+                'gender' => ['required'],
+                'division_id' => ['required'],
+                'district_id' => ['required'],
+                'thana_id' => ['required'],
+                'ward_no' => ['required'],
+                'group_id' => ['required'],
+                'mobile_number' => ['required', 'string', 'unique:' . RequestedUser::class],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:' . RequestedUser::class],
+                'whats_app_number' => ['required'],
+                'password' => ['required','min:6','max:100'],
+                'confirm_password' => ['required', 'same:password'],
+                'mobile_number' => ['required'],
+                'monitor_name' => ['required'],
+                'monitor_number' => ['required'],
+                'drector_name' => ['required'],
+                'director_number' => ['required'],
 
-        $this->createRequestedUser($request);
+            ]);   
+            $this->createRequestedUser($request);
 
-        $checkIfTheUserIsAccepted = RequestedUser::where([['email', $request->email], ['status', 0]])->first();
-        if ($checkIfTheUserIsAccepted) {
-            throw ValidationException::withMessages([
-                'confirm_password' => "Account created. Please wait untill the admin accept your request.",
-            ]);
+            $checkIfTheUserIsAccepted = RequestedUser::where([['email', $request->email], ['status', 0]])->first();
+            if ($checkIfTheUserIsAccepted) {
+                throw ValidationException::withMessages([
+                    'confirm_password' => "Account created. Please wait untill the admin accept your request.",
+                ]);
+            }
         }
+
+
+       
 
         // event(new Registered($user));
         // Auth::login($user);
