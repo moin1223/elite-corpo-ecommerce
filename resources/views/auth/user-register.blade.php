@@ -140,34 +140,6 @@
 
                             </div>
                             <div class="mb-3">
-                                <label for="first-name" class="d-block text-uppercase mb-2">Thana <span
-                                    class="text-danger font-bold">*</span></label>
-                                <select name="thana_id" id="thana"
-                                    class="form-select w-100 w-lg-75 px-2 py-3 rounded border border-black border-2"
-                                    aria-label="Default select example">
-                                    <option value="">Select Thana</option>
-                                    @if ($thanas)
-                                        @foreach ($thanas as $thana)
-                                            <option value="{{ $thana->id }}">{{ $thana->name }}
-                                            </option>
-                                        @endforeach
-                                    @endif
-
-                                </select>
-                                @error('thana_id')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="d-block text-uppercase mb-2">Email <span
-                                    class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="email" name="email" id=""
-                                    placeholder="Email" required>
-                                    @error('email')
-                                    <p class="text-danger">{{ $message }}</p>
-                                   @enderror
-                            </div>
-                            <div class="mb-3">
                                 <label for="email" class="d-block text-uppercase mb-2">Password <span
                                     class="text-danger font-bold">*</span></label>
                                 <input class="w-100 w-lg-75 px-2 py-3 rounded" type="password" name="password"

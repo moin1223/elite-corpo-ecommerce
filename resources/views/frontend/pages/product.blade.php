@@ -1,9 +1,17 @@
 @extends('frontend.layouts.default')
 @section('content')
+<style>
+.text-align {
+  text-align: justify;
+    word-spacing: 2px;
+}
+</style>
     @include('frontend.includes.slider')
     @php
         $products = \App\Models\Category::with('product')->get();
+        $collection = \App\Models\AuthImageVideo::all();
     @endphp
+
 
     <div class="text-center mt-5 ">
         <h1 class="fw-bold" id="products">Our Products</h1>
@@ -46,17 +54,18 @@
         <h3 class="text-center fs-2 fw-bold mt-5">About Us</h3>
         <div class="row p-2 mt-4">
             <div class="col-12 col-lg-6">
-                <img class="w-100" src="./frontend/images/about.jpg" alt="">
+                {{-- <img class="w-100" src="./frontend/images/about.jpg" alt=""> --}}
+                {{-- <img src="/frontend/images/elit-logo.jpg" class="" style="height: 55px" alt=""> --}}
             </div>
-            <div class="col-12 col-lg-6 px-2 pt-2 px-lg-4 mt-5 mt-lg-0">
+            <div class="text-center">
                 <p class="fs-5">
                     Welcome to Elite Corporation.
                     Elite Corporation is mainly supplying health, cosmetic and spice products all over Bangladesh. <br>
-                <p>Each product is hygienic and chemical free.Organic products are mainly needed to keep our body
+                <p class="text-align">Each product is hygienic and chemical free.Organic products are mainly needed to keep our body
                     healthy,
                     especially during corona time doctors advised to consume different types of tea or masala tea or
                     organic products to avoid that dangerous virus.</p>
-                <p>
+                <p class="text-align">
                     During the Corona period, we have realized that
                     we
                     need to boost our immune system to keep our body healthy and protect us from the clutches of
@@ -72,4 +81,54 @@
 @endsection
 
 @section('content-js')
+@endsection
+@section('content-js')
+    <script src="{{ asset('website/vendors/datatable/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('website/vendors/datatable/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('website/vendors/datatable/js/dataTables.buttons.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.donation-action', function() {
+
+                const user_id = $(this).attr("data-id");
+                const actionName = $(this).attr("action-name");
+                $('#user-id').val(user_id);
+                $('#exampleModal').modal('show');
+                $.ajax({
+                    url: "{{ route('get-requested-user-details') }}",
+                    data: {
+                        user_id: user_id,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        console.log(response.first_name);
+                        $("#user-info").html(
+                            `
+                                <h6><span class="fw-bold">Name: </span>${response.first_name} ${response.last_name}</h6>
+                                <h6 class="mt-3"><span class="fw-bold">Email Address: </span>${response.email}</h6>
+                                <h6 class="mt-3"><span class="fw-bold"> Requested Role: </span>${response.role}</6>
+                                <h6 class="mt-3"><span class="fw-bold">Division: </span>${response.division.name}</6>
+                                <h6 class="mt-3"><span class="fw-bold">District: </span>${response.district.name}</6>
+                                <h6 class="mt-3"><span class="fw-bold">Thana: </span>${response.thana.name}</6>
+                                <h6 class="mt-3"><span class="fw-bold">Mobile Number: </span>${response.mobile_number}</6>
+                                  
+                                 ${response.whats_app_number ?`<h6 class="mt-3"><span class="fw-bold">Whats Number: </span>${response.whats_app_number}</6>` : '' }
+                                 ${response.gender ?`<h6 class="mt-3"><span class="fw-bold">Gender: </span>${response.gender}</6>` : '' }
+                                 ${response.group ?.name ?`<h6 class="mt-3"><span class="fw-bold">Group Name: </span>${response.group.name}</6>` : '' }
+                                  
+                                 ${response.ward_no ?`<h6 class="mt-3"><span class="fw-bold">Ward No: </span>${response.ward_no}</6>` : '' }
+                                 ${response.monitor_name ?`<h6 class="mt-3"><span class="fw-bold">Monitor Name: </span>${response.monitor_name}</6>` : '' }
+                                    ${response.monitor_number ?`<h6 class="mt-3"><span class="fw-bold">Monitor Number: </span>${response.monitor_number}</6>` : '' }
+                                        ${response.drector_name ?`<h6 class="mt-3"><span class="fw-bold">Drector Name: </span>${response.drector_name}</6>` : '' }
+                                            ${response.director_number ?`<h6 class="mt-3"><span class="fw-bold">Director Number: </span>${response.director_number}</6>` : '' }
+                                                ${response.address ?`<h6 class="mt-3"><span class="fw-bold">Address: </span>${response.address}</6>` : '' }
+                                    
+
+                                    `);
+                    }
+                });
+
+            });
+        });
+    </script>
 @endsection

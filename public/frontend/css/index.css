@@ -51,10 +51,6 @@
     background-color: #212a2f;
 }
 
-.footer-bg input {
-    background-color: rgb(77, 85, 89);
-    ;
-}
 
 
 /* health prodcuts scroll  */
@@ -64,6 +60,7 @@
     gap: 20px;
     overflow-x: auto;
     padding: 5px;
+ 
 
 }
 
@@ -72,10 +69,11 @@
 }
 
 .wrapper .item {
-    height: 400px;
     box-shadow: 5px 10px 10px gray;
     border: 1px solid gray;
     border-radius: 5px;
+    padding-bottom: 10px;
+
 }
 
 .nav-wrapper {
@@ -111,12 +109,11 @@
 
 /* Dropdown Button */
 .dropbtn {
-
     border: none;
 }
 
 /* Dropdown Content (Hidden by Default) */
-.dropdown-content {
+.drodown-item {
     display: none;
     position: absolute;
     top: 40px;
@@ -128,7 +125,7 @@
 }
 
 /* Links inside the dropdown */
-.dropdown-content a {
+.drodown-item a {
     color: black;
     padding: 10px 8px;
     text-decoration: none;
@@ -136,16 +133,19 @@
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {
+.drodown-item a:hover {
     background-color: #ddd;
 }
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
+/* .dropdown:hover .drodown-item  {
     display: block;
-}
+} */
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
+}
+.dropbtn-bg{
+    background-color: black !important;
 }

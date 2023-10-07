@@ -96,23 +96,23 @@ class UserController extends Controller
         if ($role) {
             $user->assignRole($role);
         }
-        try {
-            $sender = Sender::getInstance();
-            $sender->setProvider(Mobireach::class);
-            $sender->setMobile('8801840010215');
-            $sender->setMessage('helloooooooo boss!');
-            $sender->setConfig(
-                [
-                    'Username' => 'elitecor',
-                    'Password' => '3Kaieschy-78',
-                    'From' => 'Elite Corpo'
-                ]
-            );
-            $status = $sender->send();
-        } catch (Exception $e) {
+        // try {
+        //     $sender = Sender::getInstance();
+        //     $sender->setProvider(Mobireach::class);
+        //     $sender->setMobile('8801840010215');
+        //     $sender->setMessage('helloooooooo boss!');
+        //     $sender->setConfig(
+        //         [
+        //             'Username' => 'elitecor',
+        //             'Password' => '3Kaieschy-78',
+        //             'From' => 'Elite Corpo'
+        //         ]
+        //     );
+        //     $status = $sender->send();
+        // } catch (Exception $e) {
 
-            echo 'Error: ' . $e->getMessage();
-        }
+        //     echo 'Error: ' . $e->getMessage();
+        // }
 
         return redirect()->back()->with(['message' => 'User Register Request Accepted', 'alert-type' => 'success']);
     }

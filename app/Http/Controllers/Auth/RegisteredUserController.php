@@ -14,6 +14,7 @@ use App\Models\AuthorizedPartne;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\Thana;
+use App\Models\UserDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -21,6 +22,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -43,14 +45,33 @@ class RegisteredUserController extends Controller
             $request->validate([
                 'first_name' => ['required', 'string', 'max:255'],
                 'last_name' => ['required', 'string', 'max:255'],
-                'mobile_number' => ['required'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:' . RequestedUser::class],
+                'mobile_number' => ['required','unique:' . UserDetails::class],
                 'password' => ['required', 'min:6', 'max:100'],
                 'confirm_password' => ['required', 'same:password'],
                 'division_id' => ['required'],
                 'district_id' => ['required'],
-                'thana_id' => ['required'],
+    
             ]);
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'password' => $request->password,
+            ]);
+            UserDetails::create([
+                'gender' => $request->gender,
+                'division_id' => $request->division_id,
+                'district_id' => $request->district_id,
+                'mobile_number' => $request->mobile_number,
+                'role' => $request->role,
+                'user_id' => $user->id,
+            ]);
+            $role = Role::where('name', $user->role)->first();
+    
+            if ($role) {
+                $user->assignRole($role);
+            }
+            return redirect()->back()->with(['message' => 'You are regitered!', 'alert-type' => 'success']);
+        
         }
 
         $this->createRequestedUser($request);

@@ -88,8 +88,9 @@ class FrontendController extends Controller
     {
     $products = Category::with('product')->get();
     $sliders = Slider::all();
+    $collection = AuthImageVideo::all();
     // dd($products);
-        return view('frontend.pages.home', compact('products','sliders'));
+        return view('frontend.pages.home', compact('products','sliders','collection'));
     }
 
     public function product()

@@ -1,43 +1,4 @@
-{{-- <x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
-
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout> --}}
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -71,8 +32,6 @@
             @endif
                 <form method="POST" action="{{route('password.store')}}" class="row g-3 mt-3">
                     @csrf
-                    {{-- @method('PUT') --}}
-                        <!-- Password Reset Token -->
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
                     <div class="col-12">
                         <label for="inputEmail4" class="form-label">Email</label>
@@ -103,8 +62,59 @@
             </div>
         </div>
     </div>
-
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script> --}}
 </body>
 
-</html>
+</html> --}}
+@extends('frontend.layouts.default')
+
+@section('content')
+
+<section class="py-5 py-lg-5 px-4 px-lg-5 signin-bg">
+    <div class="row ">
+        <div class="col-12 col-lg-6 p-4 p-lg-5  fw-bold">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+            <h2 class="mb-2 mb-lg-5">Reset Password</h2>
+                <form method="POST" action="{{route('password.store')}}">
+                @csrf
+                <input type="hidden" name="token" value="{{ $request->route('token') }}">
+            <div class="mb-4">
+                <label for="email" class="d-block text-uppercase mb-2">Email</label>
+                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="email" name="email"value="{{ old('email', $request->email) }}" placeholder="Email">
+            </div>
+            <div class="mb-5">
+                <label for="password" class="d-block text-uppercase mb-2 ">Password</label>
+                <input type="password" class="w-100 w-lg-75 px-2 py-3 rounded" name="password" 
+                    placeholder="* * * * * * *">
+            </div>
+            <div class="mb-5">
+                <label for="password" class="d-block text-uppercase mb-2 "> Confirm Password</label>
+                <input type="password" class="w-100 w-lg-75 px-2 py-3 rounded" name="password_confirmation" 
+                    placeholder="* * * * * * * *">
+            </div>
+            <div class="w-100 w-lg-75 border text-center px-2 py-3
+             bg-black">
+                {{-- <a href="index.html" class="text-decoration-none "> --}}
+                    <button type="submit" class="btn btn-outline text-white text-uppercase">
+                        Reset
+                    </button>
+                {{-- </a> --}}
+
+            </div>
+            </form>
+        </div>
+        <div class="col-12 col-lg-6 mt-5 mt-lg-0 p-0 px-lg-2 mb-5 d-none d-lg-block">
+            <img class="w-100 h-100 "
+                src="https://plus.unsplash.com/premium_photo-1681487814165-018814e29155?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGxvZ2lufGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60"
+                alt="">
+        </div>
+    </div>
+</section>
+@endsection

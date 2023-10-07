@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\UserDetails;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -38,6 +39,14 @@ class UserSeeder extends Seeder
                     $u->assignRole($role);
                 }
             }
+            UserDetails::create([
+                'mobile_number'=>'01840',
+                'gender' => 'male',
+                'division_id' => 2,
+                'district_id' => 2,
+                'thana_id' => 2,
+                'user_id' => 1,
+            ]);
 
         }
 

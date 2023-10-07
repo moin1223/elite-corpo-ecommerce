@@ -5,28 +5,55 @@
         transition: max-height 0.3s ease-in-out;
         /* Adjust the duration as needed */
     }
+
+    .black-button {
+        background-color: black;
+        color: white;
+    }
+
+    @media screen and (min-width: 350px) and (max-width: 412px) {
+        .serach {
+            margin-left: 30px;
+        }
+
+        /* Your CSS styles for screens between 300px and 500px go here */
+        /* For example, you can adjust font size or layout for smaller screens */
+    }
 </style>
 
 <header>
     <!-- Navbar  -->
     <nav class="navbar navbar-expand-md fw-bold shadow bg-white ">
-        <a href="index.html" class="navabar-brand fs-3 me-1 me-md-2 me-lg-5 ms-1 ms-md-2 ms-lg-4 mb-1 mb-lg-3">
-            <img src="/frontend/images/elit-logo.jpg" style="height: 55px" alt="">
-        </a>
-        <form action="{{ route('seller-search') }}" method="POST">
-            @csrf
-            <input type="text" name="mobile_number" class="px-2 px-lg-3 pt-1 pb-2"
-                placeholder="Search by phone number">
-            @if (session('sellerMessage'))
-                <p class="text-danger">{{ session('sellerMessage') }}</p>
-            @endif
-            <button class="dropbtn px-2 px-lg-3 pt-1 pb-2 rounded text-center text-white bg-black ">Search</button>
-        </form>
+        <div class="d-flex  align-items-center ">
+            <a href="index.html" class="navabar-brand fs-3 me-1 me-md-2 me-lg-5 ms-1 ms-md-2 ms-lg-4 mb-1 mb-lg-3">
+                <img src="/frontend/images/elit-logo.jpg" style="height: 55px" alt="">
+            </a>
+        </div>
 
         <button class="navbar-toggler  me-2 me-lg-3" type="button" data-bs-toggle="collapse" id="custom"
             data-bs-target="#btn">
             <i class='bx bx-menu bx-sm'></i>
         </button>
+        <form action="{{ route('seller-search') }}" method="POST">
+            @csrf
+            <div class="container mt-4 ms-1 serach">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="mobile_number"
+                        placeholder="Enter authorized seller number" aria-label="Search" aria-describedby="basic-addon2"
+                        style="width: 200px;">
+                    <div class="input-group-append">
+                        <button class="btn black-button" type="submit">Search</button>
+                    </div>
+                </div>
+
+                @if (session('sellerMessage'))
+                    <div id="emailHelp" class="form-text text-danger">{{ session('sellerMessage') }}</div>
+                @else
+                    <div id="emailHelp" class="form-text">সেলার কে যাচাই করুন</div>
+                @endif
+            </div>
+
+        </form>
         <div class="collapse navbar-collapse " id="btn">
             <ul class="navbar-nav ms-auto ul-bg">
                 <li class="nav-item mx-3 mx-lg-2 fs-lg-5">
