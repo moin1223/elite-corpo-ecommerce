@@ -23,6 +23,9 @@ use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
+use Exception;
+use Xenon\LaravelBDSms\Provider\Mobireach;
+use Xenon\LaravelBDSms\Sender;
 
 class RegisteredUserController extends Controller
 {
@@ -57,7 +60,7 @@ class RegisteredUserController extends Controller
                 'last_name' => $request->last_name,
                 'password' => Hash::make($request->password),
             ]);
-            UserDetails::create([
+            $userDetails = UserDetails::create([
                 'gender' => $request->gender,
                 'division_id' => $request->division_id,
                 'district_id' => $request->district_id,
@@ -70,6 +73,23 @@ class RegisteredUserController extends Controller
             if ($role) {
                 $user->assignRole($role);
             }
+               try {
+            $sender = Sender::getInstance();
+            $sender->setProvider(Mobireach::class);
+            $sender->setMobile($userDetails->mobile_number);
+            $sender->setMessage('বিশ্বমানের পণ্য উৎপাদনকারী প্রতিষ্ঠান এলিট কর্পোরেশন এর পক্ষ থেকে আপনাকে জানাই অভিনন্দন। আপনার সন্তুষ্টিই আমাদের সফলতা।');
+            $sender->setConfig(
+                [
+                    'Username' => 'elitecor',
+                    'Password' => '3Kaieschy-78',
+                    'From' => 'Elite Corpo'
+                ]
+            );
+            $status = $sender->send();
+        } catch (Exception $e) {
+
+            echo 'Error: ' . $e->getMessage();
+        }
             return redirect()->back()->with(['message' => 'You are regitered!', 'alert-type' => 'success']);
         
         }

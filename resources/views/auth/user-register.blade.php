@@ -107,7 +107,7 @@
                             <div class="mb-3">
                                 <label for="first-name" class="d-block text-uppercase mb-2">Division <span
                                     class="text-danger font-bold">*</span></label>
-                                <select name="division_id" id="division"
+                                {{-- <select name="division_id" id="division" required
                                     class="form-select w-100 w-lg-75 px-2 py-3 rounded border border-black border-2"
                                     aria-label="Default select example">
                                     <option selected>Select Division</option>
@@ -118,13 +118,27 @@
                                 </select>
                                 @error('division_id')
                                     <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                                @enderror --}}
+                                <select name="division_id" id="division" required
+                                class="form-select w-100 w-lg-75 px-2 py-3 rounded border border-black border-2"
+                                aria-label="Default select example">
+                                <option value="">Select Division</option>
+                                @if ($districts)
+                                    @foreach ($divisons as $division)
+                                        <option value="{{ $division->id }}">
+                                            {{ $division->name }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            @error('division_id')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
 
                             </div>
                             <div class="mb-3">
                                 <label for="first-name" class="d-block text-uppercase mb-2">District <span
                                     class="text-danger font-bold">*</span></label>
-                                <select name="district_id" id="district"
+                                <select name="district_id" id="district" required
                                     class="form-select w-100 w-lg-75 px-2 py-3 rounded border border-black border-2"
                                     aria-label="Default select example">
                                     <option value="">Select District</option>

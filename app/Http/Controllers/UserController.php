@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\RequestedUser;
 use App\Models\UserDetails;
 use App\Models\UserEditRequest;
+use App\Notifications\EmailNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\UserDataRepository;
@@ -96,6 +97,7 @@ class UserController extends Controller
         if ($role) {
             $user->assignRole($role);
         }
+        $user->notify(new EmailNotification());
         // try {
         //     $sender = Sender::getInstance();
         //     $sender->setProvider(Mobireach::class);
