@@ -98,7 +98,8 @@
                                 <label for="last-name" class="d-block text-uppercase mb-2">Mobile Number <span
                                     class="text-danger font-bold">*</span></label>
                                 <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="mobile_number"
-                                    id="" placeholder="Mobile Number" required>
+                                    id="mobile_number" value="88" placeholder="Mobile Number" required>
+                                    <p class="text-danger" id="phone_number_validation_message"></p>
                                     @error('mobile_number')
                                     <p class="text-danger">{{ $message }}</p>
                                    @enderror
@@ -173,21 +174,18 @@
     </section>
 @endsection
 
-{{-- @section('content-js')
+@section('content-js')
     <script>
-        $(document).ready(() => {
-            $('#image').change(function() {
-                const file = this.files[0];
-                console.log(file);
-                if (file) {
-                    let reader = new FileReader();
-                    reader.onload = function(event) {
-                        console.log(event.target.result);
-                        $('#imgPreview').attr('src', event.target.result);
-                    }
-                    reader.readAsDataURL(file);
-                }
-            });
+      $("#mobile_number").keyup(function() {
+            const phoneNumber = $(this).val();
+            const bdPhoneNumberPattern = /^8801\d{9}$/;
+
+            if (bdPhoneNumberPattern.test(phoneNumber)) {
+                $("#phone_number_validation_message").text("")
+            } else {
+                $("#phone_number_validation_message").text(
+                    "Invalid phone number. Please enter a valid Bangladeshi phone number.")
+            }
         });
     </script>
-@endsection --}}
+@endsection

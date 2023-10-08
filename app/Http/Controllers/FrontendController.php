@@ -75,7 +75,7 @@ class FrontendController extends Controller
                 $year = $date->format('Y');
                 $time = $date->format('h:i:s');
                 $month = $date->translatedFormat('F');
-                $codeExpireDate = "$day $month, $year, $time";
+                $codeExpireDate = "Your code has expired: $day $month, $year, $time";
                 return response()->json(['message'=>$message, 'codeExpireDate' =>$codeExpireDate]);
             }
         }

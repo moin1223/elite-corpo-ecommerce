@@ -201,9 +201,9 @@
                             <div class="mb-3 mt-3">
                                 <label for="last-name" class="d-block text-uppercase mb-2">Mobile Number(Otp) <span
                                         class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="mobile_number" id="mobile_number"
+                                <input class="w-100 w-lg-75 px-2 py-3 rounded mobile_number" type="text" name="mobile_number" value="88"
                                     placeholder="Mobile Number" required>
-                                <p class="text-danger" id="phone_number_validation_message"></p>
+                                <p class="text-danger phone_number_validation_message"></p>
                                 @error('mobile_number')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -211,8 +211,9 @@
                             <div class="mb-3 mt-3">
                                 <label for="whats-app-number" class="d-block text-uppercase mb-2">WhatsApp Number<span
                                         class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="whats_app_number" id=""
+                                <input class="w-100 w-lg-75 px-2 py-3 rounded mobile_number" type="text" name="whats_app_number" id="mobile_number" value="88"
                                     placeholder="Mobile Number" required>
+                                    <p class="text-danger phone_number_validation_message"></p>
                                 @error('whats_app_number')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -353,14 +354,14 @@
         });
 
         // Validation for phone number in BD
-        $("#mobile_number").keyup(function() {
+        $(".mobile_number").keyup(function() {
             const phoneNumber = $(this).val();
-            const bdPhoneNumberPattern = /^01\d{9}$/;
+            const bdPhoneNumberPattern = /^8801\d{9}$/;
 
             if (bdPhoneNumberPattern.test(phoneNumber)) {
-                $("#phone_number_validation_message").text("")
+                $(".phone_number_validation_message").text("")
             } else {
-                $("#phone_number_validation_message").text(
+                $(".phone_number_validation_message").text(
                     "Invalid phone number. Please enter a valid Bangladeshi phone number.")
             }
         });

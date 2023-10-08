@@ -77,45 +77,17 @@
                 @csrf --}}
 
             <div class="mt-3 ">
-                <input class="w-50 px-5 pe-lg-1  py-2 " type="text" name="product_code" id="product-code">
-                <button class="px-3 px-lg-4 py-2 bg-black text-white rounded fw-bold " id="submitButton">Submit</button>
-            </div>
+                <form action="">
 
+                <input class="w-50 px-5 pe-lg-1  py-2 " type="text" name="product_code" id="product-code" required>
+                <button class="px-3 px-lg-4 py-2 bg-black text-white rounded fw-bold " id="submitButton">Submit</button>
+                                    
+            </form>
+            </div>
+            <div id="container">
+            </div>
             <p class="mt-5 fs-5">Note: The code can be used only once.
                 The code will appear expired if it has been previously used.</p>
-
-                <div id="container">
-                    {{-- <p>This is the container.</p> --}}
-                </div>
-            @if (session('message'))
-                <div
-                    class="alert 
-                      @if (session('message') === 'Your product is not original') bg-danger text-white)
-                      @elseif(session('message') === 'Your product is original') 
-
-                  bg-success text-white
-                  @else 
-                 bg-warning @endif 
-                 message">
-                    {{ session('message') }}
-                    {{ session('codeExpireDate') }}
-                </div>
-            @endif
-
-
-            {{-- <p class="text-center mt-5 border py-4 bg-success rounded w-100 mx-auto text-white fs-6">Your product is
-                original
-            </p>
-
-
-            <p class="text-center mt-5 border py-4 bg-primary rounded w-100 mx-auto text-white fs-6">Your product is not
-                original</p> --}}
-
-
-
-
-
-
 
         </div>
         @foreach ($collection as $item)
@@ -152,11 +124,41 @@
                         _token: "{{ csrf_token() }}"
                     },
                     success: function(response) {
-                        console.log(response.message);
-                        if(response.message = 'Your product is not original') {
-                            var newChild = '<div class="alert bg-danger text-white">fgfgf</div>';
-                             $('#container').append(newChild);
+                        console.log(response);
+                        if (response.message == 'Your product is not original') {
+                            if ($('#container').children().length > 0) {
+                                // Remove all child elements from #container
+                                $('#container').empty();
+                            }
+                            var newChild =
+                                '<div class= "mt-3 alert bg-danger text-white">Your product is not original</div>';
+                            $('#container').append(newChild);
                         }
+
+                        if (response.message == 'Your product is original') {
+                            if ($('#container').children().length > 0) {
+                                // Remove all child elements from #container
+                                $('#container').empty();
+                            }
+                            var newChild =
+                                '<div class="mt-3 alert  bg-success text-white">Your product is original.</div>';
+                            $('#container').append(newChild);
+                        }
+                        if (response.message != 'Your product is not original' && response
+                            .message != 'Your product is original') {
+                            if ($('#container').children().length > 0) {
+                                // Remove all child elements from #container
+                                $('#container').empty();
+                            }
+
+                            var newChild =
+                                $('<div class="mt-3 alert bg-warning text-white"></div>');
+                            newChild.text(response.codeExpireDate);
+                            $('#container').append(newChild);
+                        }
+
+
+
                     }
                     // {
                     //     $('#authenticity-message').html =`<div class="alert bg-danger text-white> 

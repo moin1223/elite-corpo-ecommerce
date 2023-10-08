@@ -38,7 +38,7 @@
             @csrf
             <div class="container mt-4 ms-1 serach">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="mobile_number"
+                    <input type="text" class="form-control" name="mobile_number" value="88"
                         placeholder="Enter authorized seller number" aria-label="Search" aria-describedby="basic-addon2"
                         style="width: 200px;">
                     <div class="input-group-append">
@@ -49,7 +49,7 @@
                 @if (session('sellerMessage'))
                     <div id="emailHelp" class="form-text text-danger">{{ session('sellerMessage') }}</div>
                 @else
-                    <div id="emailHelp" class="form-text">সেলার কে যাচাই করুন</div>
+                    <div id="emailHelp" class="form-text">মোবাইল নাম্বার দ্বারা সেলার কে যাচাই করুন</div>
                 @endif
             </div>
 

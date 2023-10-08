@@ -25,7 +25,7 @@
                 <input type="hidden" name="role" value="user">
             <div class="mb-4">
                 <label for="phone" class="d-block text-uppercase mb-2">Mobile Number</label>
-                <input class="w-100 w-lg-75 px-2 py-3 rounded" id="mobile_number"type="text" name="mobile_number"  placeholder="Enter mobile number" required>
+                <input class="w-100 w-lg-75 px-2 py-3 rounded" id="mobile_number"type="text" name="mobile_number" value="88"  placeholder="Enter mobile number" required>
                 <p class="text-danger" id="phone_number_validation_message"></p>
                 @error('mobile_number')
                 <p class="text-danger">{{ $message }}</p>
@@ -117,7 +117,7 @@
         // Validation for phone number in BD
         $("#mobile_number").keyup(function() {
             const phoneNumber = $(this).val();
-            const bdPhoneNumberPattern = /^01\d{9}$/;
+            const bdPhoneNumberPattern = /^8801\d{9}$/;
 
             if (bdPhoneNumberPattern.test(phoneNumber)) {
                 $("#phone_number_validation_message").text("")
