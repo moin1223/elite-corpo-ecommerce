@@ -42,7 +42,13 @@ class OTPService
 
     public function verifyOtp($request)
     {
-        $REQ_contact_no = '0' . $request->contact_no;
+        $REQ_contact_no = strval($request->contact_no);
+        $firstThreeCharacters = substr($REQ_contact_no, 0, 3);
+        if ($firstThreeCharacters === '880') {
+            $REQ_contact_no = $request->contact_no;
+        } else {
+            $REQ_contact_no = '0' . $request->contact_no;
+        }
         $REQ_otp = $request->otp;
         $result = false;
         $message = '';
