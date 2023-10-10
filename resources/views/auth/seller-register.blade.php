@@ -104,7 +104,7 @@
                             <div class="col-md-6">
                                 <p>Gender <span class="text-danger font-bold">*</span></p>
                                 <div class="form-check-inline ">
-                                    <input class="form-check-input" type="radio" name="gender" value="male">
+                                    <input class="form-check-input" type="radio" name="gender" value="male" required>
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         Male
                                     </label>
@@ -231,7 +231,7 @@
                             <div class="mb-3">
                                 <label for="last-name" class="d-block text-uppercase mb-2">Monitor Number <span
                                         class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="monitor_number" id=""
+                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="monitor_number" id="" value="88"
                                     placeholder="Monitors Number" required>
                                 @error('monitor_number')
                                     <p class="text-danger">{{ $message }}</p>
@@ -249,7 +249,7 @@
                             <div class="mb-3">
                                 <label for="last-name" class="d-block text-uppercase mb-2">Directors Number <span
                                         class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="director_number" id=""
+                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="director_number" id="" value="88"
                                     placeholder="Directors  Number" required>
                                 @error('director_number')
                                     <p class="text-danger">{{ $message }}</p>
@@ -267,7 +267,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="d-block text-uppercase mb-2">Password <span class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="password" name="password" id="" placeholder="Password"
+                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="password" name="password" id="" placeholder="Enter 6 digit password"
                                     required>
                                 @error('password')
                                     <p class="text-danger">{{ $message }}</p>

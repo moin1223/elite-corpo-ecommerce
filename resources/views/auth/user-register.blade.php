@@ -107,18 +107,6 @@
                             <div class="mb-3">
                                 <label for="first-name" class="d-block text-uppercase mb-2">Division <span
                                     class="text-danger font-bold">*</span></label>
-                                {{-- <select name="division_id" id="division" required
-                                    class="form-select w-100 w-lg-75 px-2 py-3 rounded border border-black border-2"
-                                    aria-label="Default select example">
-                                    <option selected>Select Division</option>
-                                    @foreach ($divisons as $division)
-                                        <option value="{{ $division->id }}">{{ $division->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('division_id')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror --}}
                                 <select name="division_id" id="division" required
                                 class="form-select w-100 w-lg-75 px-2 py-3 rounded border border-black border-2"
                                 aria-label="Default select example">
@@ -158,7 +146,7 @@
                                 <label for="email" class="d-block text-uppercase mb-2">Password <span
                                     class="text-danger font-bold">*</span></label>
                                 <input class="w-100 w-lg-75 px-2 py-3 rounded" type="password" name="password"
-                                    id="" placeholder="Password" required>
+                                    id="" placeholder="Enter 6 digit password" required>
                                     @error('password')
                                     <p class="text-danger">{{ $message }}</p>
                                    @enderror
@@ -190,6 +178,24 @@
 
 @section('content-js')
     <script>
+            $('#division').on('change', function() {
+            var division_id = $(this).val();
+            var html = '';
+            $.ajax({
+                url: "{{ route('get-districts') }}",
+                data: {
+                    division_id: division_id,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(data) {
+                    data.forEach(element => {
+                        html += '<option value="' + element.id + '">' + element.text +
+                            '</option>';
+                    });
+                    $('#district').html(html);
+                }
+            });
+        });
       $("#mobile_number").keyup(function() {
             const phoneNumber = $(this).val();
             const bdPhoneNumberPattern = /^8801\d{9}$/;

@@ -37,7 +37,7 @@ class UserDetails extends Model
 
     public function district()
     {
-        return $this->belongsTo(district::class);
+        return $this->belongsTo(District::class);
     }
     public function thana()
     {
@@ -48,4 +48,3 @@ class UserDetails extends Model
         return $this->belongsTo(AuthorizedPartne::class, 'group_id');
     }
 }
-

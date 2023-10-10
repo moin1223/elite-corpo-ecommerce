@@ -27,7 +27,7 @@
                     @foreach ($category->product as $single_product)
                         <div>
                             <div class="item " style="width: 20rem;">
-                                <img src="{{ $single_product->image }}" class="card-img-top" alt="...">
+                                <img src="{{ $single_product->image }}" class="card-img-top disable-right-click-image" alt="...">
                                 <div class="card-body pt-3 ps-4">
                                     <h5 class="card-title text-uppercase fw-bold mb-2 border-bottom pb-2">
                                         {{ $single_product->product_name }}</h5>
@@ -129,6 +129,17 @@
                 });
 
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var images = document.getElementsByClassName('disable-right-click-image');
+            
+            for (var i = 0; i < images.length; i++) {
+                images[i].addEventListener('contextmenu', function(event) {
+                    event.preventDefault(); // Prevent the default right-click context menu
+                });
+            }
         });
     </script>
 @endsection

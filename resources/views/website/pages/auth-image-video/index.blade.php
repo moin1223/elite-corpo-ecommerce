@@ -53,20 +53,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($dataCollection as $data)
+                                    @forelse ($dataCollection as $authImageVideo)
                                         <tr>
-                                            <th scope="row">{{ $data->video_url }}</th>
-                                            <td><img src="{{ $data->image }}" class="w-50 rounded border border-warning">
+                                            <th scope="row">{{ $authImageVideo->video_url }}</th>
+                                            <td><img src="{{ $authImageVideo->image }}" class="w-50 rounded border border-warning">
                                             </td>
+                                            {{-- @dd($data->id); --}}
                                             <td>
                                                 <div class="action_btns d-flex">
-                                                    <a href="{{ route('auth-image-video.edit', $data->id) }}"
+                                                    <a href="{{ route('auth-image-video.edit', $authImageVideo->id) }}"
                                                         class="action_btn mr_10">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                     @include('website.component.modal.delete-modal', [
                                                         'route' => 'auth-image-video.destroy',
-                                                        'id' => $data->id,
+                                                        'id' => $authImageVideo->id,
                                                     ])
                                                 </div>
                                             </td>

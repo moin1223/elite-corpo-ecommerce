@@ -9,7 +9,7 @@
             <div class="carousel-inner">
                 @foreach ($sliders as $slider)
                     <div class="carousel-item active">
-                        <img src="{{ $slider->image }}" class="d-block w-100 slider-img" alt="...">
+                        <img src="{{ $slider->image }}" class="d-block w-100 slider-img disable-right-click-image" alt="...">
                     </div>
                 @endforeach
             </div>
@@ -55,7 +55,7 @@
                             </button>
                             <div class="drodown-item dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <a href="{{ route('user-login') }}">For User</a>
-                                <a href="{{ route('login') }}">For Seller</a>
+                                <a href="{{ route('login') }}">For Seller/Admin</a>
                             </div>
                         </div>
                     </div>
@@ -169,5 +169,16 @@
                 });
             });
         });
+    </script>
+    <script>
+         document.addEventListener('DOMContentLoaded', function() {
+        var images = document.getElementsByClassName('disable-right-click-image');
+        
+        for (var i = 0; i < images.length; i++) {
+            images[i].addEventListener('contextmenu', function(event) {
+                event.preventDefault(); // Prevent the default right-click context menu
+            });
+        }
+    });
     </script>
 @endsection
