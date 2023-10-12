@@ -35,6 +35,7 @@ Route::post('accept-user-register-request', [UserController::class, 'acceptUserR
 Route::delete('/{userId}/cancel-user-register-request',[UserController::class, 'cancelUserRegisterRequest'])->name('cancel-user-register-request');
 // Route::group(['middleware' => ['permission:can_add_user|can_edit_user|can_delete_user']], function () {
 Route::resource('user', UserController::class);
+Route::get('get-seller-list', [UserController::class, 'getSellerList'])->name('get-seller-list');
 Route::resource('authorized-partner', AuthorizedPartnerController::class);
 Route::resource('event', EventController::class);
 // });

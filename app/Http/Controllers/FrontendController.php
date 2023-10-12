@@ -129,4 +129,13 @@ class FrontendController extends Controller
             return redirect()->back()->with('sellerMessage', 'No seller found for given number!');
         }
     }
+
+    public function reseller()
+    {
+        return view('frontend.pages.reseller');
+    }
+    public function ব্যবহারবিধি()
+    {
+        return view('frontend.pages.ব্যবহারবিধি');
+    }
 }

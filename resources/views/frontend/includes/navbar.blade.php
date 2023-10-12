@@ -71,6 +71,16 @@
                         Authorized Partner
                     </a>
                 </li>
+                <li class="nav-item mx-3 mx-lg-2 fs-lg-5">
+                    <a href="{{ route('reseller') }}" class="nav-link">
+                        Reseller
+                    </a>
+                </li>
+                <li class="nav-item mx-3 mx-lg-2 fs-lg-5">
+                    <a href="{{ route('ব্যবহারবিধি') }}" class="nav-link">
+                        ব্যবহারবিধি
+                    </a>
+                </li>
                 @isset($products)
                     <li class="nav-item mx-3 mx-lg-2 fs-lg-5">
                         <a href="#products" class="nav-link">
@@ -113,6 +123,12 @@
         </a>
         <a href="{{ route('authorized-prtbners') }}" class="item text-decoration-none text-black">
             Authorized Partner
+        </a>
+        <a href="{{ route('reseller') }}" class="item text-decoration-none text-black">
+            Reseller
+        </a>
+        <a href="{{ route('ব্যবহারবিধি') }}" class="item text-decoration-none text-black">
+            ব্যবহারবিধি
         </a>
         @isset($products)
             <a href="#products" class="item text-decoration-none text-black">

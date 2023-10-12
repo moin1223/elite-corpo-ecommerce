@@ -35,10 +35,16 @@
                                     <p class="card-text mb-0 text-decoration-line-through d-inline text-danger">
                                         {{ $single_product->old_price }}TK</p><span
                                         class='ms-2 fs-4'>{{ $single_product->new_price }}Tk</span>
-                                    <div class="mt-3">
-                                        <a href="{{ route('product-review', $single_product->id) }}"
-                                            class="btn btn-dark px-4 py-2">Review</a>
-                                    </div>
+                                        <div class="row">
+                                            <div class="mt-3 col-6">
+                                                <a href="{{ route('product-review', $single_product->id) }}"
+                                                    class="btn btn-dark px-4 py-2">Review</a>
+                                            </div>
+                                            <div class="mt-3 col-6">
+                                                <a href="{{ route('product-details', $single_product->id) }}"
+                                                    class="btn btn-dark px-4 py-2">Details</a>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>

@@ -26,7 +26,7 @@
                 <div class="QA_section">
                     <div class="row">
                         <div class="col-md-6">
-                            <h6 class="mt-3"><span class="fw-bolder">Name:</span> {{ $user->first_name }}</h6>
+                            <h6 class="mt-3"><span class="fw-bolder">Name:</span> {{ $user->first_name }} {{$user->last_name}}</h6>
 
                             @if ($userDetails->gender)
                             <h6 class="mt-3"><span class="fw-bolder">Gender:</span> {{ $userDetails->gender }}</h6>
@@ -50,9 +50,16 @@
 
                             <h6 class="mt-3"><span class="fw-bolder">Division:</span>
                                 {{ $userDetails->division->name}}</h6>
-
+                                <h6 class="mt-3"><span class="fw-bolder">Ditrict:</span> {{ $userDetails->district->name }}
+                                </h6>
+                                @if ($userDetails->thana)
                             <h6 class="mt-3"><span class="fw-bolder">Thana:</span>
-                                {{ $userDetails->thana->name }}</h6>
+                                {{ $userDetails->thana->name }}
+                            </h6>
+                            @endif
+
+
+
                             @if ($userDetails->group && $userDetails->group->name)
                                 <h6 class="mt-3"><span class="fw-bolder">Group Name:</span>
                                     {{ $userDetails->group->name }}</h6>
@@ -75,9 +82,6 @@
                                 <h6 class="mt-3"><span class="fw-bolder">Drector Number:</span>
                                     {{ $userDetails->director_number }}</h6>
                             @endif
-
-                            <h6 class="mt-3"><span class="fw-bolder">Ditrict:</span> {{ $userDetails->district->name }}
-                            </h6>
                             @if ($userDetails->ward_no)
                                 <h6 class="mt-3"><span class="fw-bolder">Ward No:</span> {{ $userDetails->ward_no }}</h6>
                             @endif

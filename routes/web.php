@@ -37,6 +37,9 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/products', 'product')->name('product-page');
     Route::get('/contact-us', 'contactUs')->name('contact-us');
     Route::get('/about-us', 'aboutUs')->name('about-us');
+    Route::get('/reseller', 'reseller')->name('reseller');
+    Route::get('/ব্যবহারবিধি', 'ব্যবহারবিধি')->name('ব্যবহারবিধি');
+    Route::get('product/{productId}/details', [ProductController::class, 'productDetails'])->name('product-details');
     Route::get('/authorized-partners', 'getAuthorizedPartbner')->name('authorized-prtbners');
     Route::get('product/{productId}/review', [ReviewController::class, 'productReview'])->name('product-review');
     Route::post('/seller-search', [FrontendController::class, 'sellerSearch'])->name('seller-search');

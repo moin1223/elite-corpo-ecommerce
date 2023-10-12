@@ -18,8 +18,19 @@
                     </div>
                     <div class="serach_field_2">
                         <div class="">
-                            <form method="GET" action="{{ route('user.index') }}">
+                            <form method="GET" action="{{ route('get-seller-list') }}">
                                 @csrf
+
+                                <label class="form-label"><span
+                                    class="text-danger font-bold ">*</span></label>
+                            <select class="js-example-basic-single" name="group" style="hight: 200px; hight: 50px;">
+                                <option>Select group</option>
+                                @foreach ($groups as $group)
+                                    <option value="{{ $group->name }}">{{ $group->name }}</option>
+                                @endforeach
+                            </select>
+
+
                                         <label class="form-label"><span
                                                 class="text-danger font-bold ">*</span></label>
                                         <select class="js-example-basic-single" name="district" style="hight: 150px; hight: 50px;">
@@ -32,7 +43,7 @@
                                      <button class="btn btn-primary">Search</button>
                                     </div>
                                     @if (session('message'))
-                                    <p class="text-danger">please select district</p>
+                                    <p class="text-danger">please select group or district!</p>
                                     @endif
                                 </div>
                      
@@ -111,7 +122,6 @@
                         <div class="mt-2">
                             {{ $users->links('pagination::bootstrap-5') }}
                         </div>
-   
                     </div>
                 </div>
             </div>

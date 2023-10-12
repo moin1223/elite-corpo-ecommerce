@@ -71,6 +71,11 @@
                     </div>
                 @endif --}}
                 <div class="col-12 col-lg-6 px-5">
+                    @if (session('successMessage'))
+                    <div class="alert bg-success text-white">
+                        {{ session('successMessage') }} 
+                    </div>
+                @endif
                     <h2>CREATE AN ACCOUNT</h2>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf

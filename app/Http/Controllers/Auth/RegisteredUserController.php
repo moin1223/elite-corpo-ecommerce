@@ -73,24 +73,24 @@ class RegisteredUserController extends Controller
             if ($role) {
                 $user->assignRole($role);
             }
-               try {
-            $sender = Sender::getInstance();
-            $sender->setProvider(Mobireach::class);
-            $sender->setMobile($userDetails->mobile_number);
-            $sender->setMessage('বিশ্বমানের পণ্য উৎপাদনকারী প্রতিষ্ঠান এলিট কর্পোরেশন এর পক্ষ থেকে আপনাকে জানাই অভিনন্দন। আপনার সন্তুষ্টিই আমাদের সফলতা।');
-            $sender->setConfig(
-                [
-                    'Username' => 'elitecor',
-                    'Password' => '3Kaieschy-78',
-                    'From' => 'Elite Corpo'
-                ]
-            );
-            $status = $sender->send();
-        } catch (Exception $e) {
+        //        try {
+        //     $sender = Sender::getInstance();
+        //     $sender->setProvider(Mobireach::class);
+        //     $sender->setMobile($userDetails->mobile_number);
+        //     $sender->setMessage('বিশ্বমানের পণ্য উৎপাদনকারী প্রতিষ্ঠান এলিট কর্পোরেশন এর পক্ষ থেকে আপনাকে জানাই অভিনন্দন। আপনার সন্তুষ্টিই আমাদের সফলতা।');
+        //     $sender->setConfig(
+        //         [
+        //             'Username' => 'elitecor',
+        //             'Password' => '3Kaieschy-78',
+        //             'From' => 'Elite Corpo'
+        //         ]
+        //     );
+        //     $status = $sender->send();
+        // } catch (Exception $e) {
 
-            echo 'Error: ' . $e->getMessage();
-        }
-            return redirect()->back()->with(['message' => 'You are regitered!', 'alert-type' => 'success']);
+        //     echo 'Error: ' . $e->getMessage();
+        // }
+            return redirect()->back()->with(['successMessage' => 'You are regitered now you can login!', 'alert-type' => 'success']);
         
         }
         if($request->role === 'seller')

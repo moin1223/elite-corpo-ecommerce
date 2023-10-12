@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserType;
 use App\Models\AssignUser;
+use App\Models\AuthorizedPartne;
+use App\Models\District;
 use Illuminate\Http\Request;
 use App\Models\RequestedUser;
 use App\Models\UserDetails;
@@ -23,19 +25,31 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $groupName = $request->input('group_name');
+        
+        if($request->district=='Select District')
+        {
+            return redirect()->back()->with('message', 'please select district');
+        }
+        // dd($request->district);
+        // $request->validate([
+        //     'district' => ['required'],
 
-        $usersQuery = UserDetails::with('user');
 
-        if ($groupName) {
-            $usersQuery->whereHas('group', function ($query) use ($groupName) {
-                $query->where('name', 'like', '%' . $groupName . '%');
+        // ]);
+         $districts = District::all();
+        $districtName = $request->input('district');
+
+        $usersQuery = UserDetails::with('user', 'district')->where('role', 'user');
+
+        if ($districtName) {
+            $usersQuery->whereHas('district', function ($query) use ($districtName) {
+                $query->where('name', 'like', '%' . $districtName . '%');
             });
         }
-
+      
         $users = $usersQuery->paginate(10)->appends($request->all());
-        //  $users = User:: all();
-        return view('website.user.list', compact('users'));
+        // dd($users);
+        return view('website.user.list', compact('users','districts'));
     }
     public function show(User $user)
     {
@@ -123,5 +137,50 @@ class UserController extends Controller
         $requestedUser = RequestedUser::findOrfail($id);
         $requestedUser->delete();
         return redirect()->back()->with(['message' => 'User Register Request Cancel', 'alert-type' => 'success']);
+    }
+
+    public function getSellerList(Request $request)
+    {
+ 
+        if($request->group=='Select group' && $request->district=='Select District')
+        {
+            return redirect()->back()->with('message', 'please select group or district');
+        }
+  
+         $districts = District::all();
+         $groups = AuthorizedPartne::all();
+        $districtName = $request->input('district');
+        $groupName = $request->input('group');
+
+        $usersQuery = UserDetails::with('user', 'district')->where('role', 'seller');
+
+        // if ($districtName) {
+        //     $usersQuery->whereHas('district', function ($query) use ($districtName) {
+        //         $query->where('name', 'like', '%' . $districtName . '%');
+        //     });
+        // }
+
+        // $users = $usersQuery->paginate(10)->appends($request->all());
+     
+if ($districtName && $groupName) {
+    $usersQuery->where(function ($query) use ($districtName, $groupName) {
+        $query->whereHas('district', function ($subQuery) use ($districtName) {
+            $subQuery->where('name', 'like', '%' . $districtName . '%');
+        })->orWhereHas('group', function ($subQuery) use ($groupName) {
+            $subQuery->where('name', 'like', '%' . $groupName . '%');
+        });
+    });
+} elseif ($districtName) {
+    $usersQuery->whereHas('district', function ($query) use ($districtName) {
+        $query->where('name', 'like', '%' . $districtName . '%');
+    });
+} elseif ($groupName) {
+    $usersQuery->whereHas('group', function ($query) use ($groupName) {
+        $query->where('name', 'like', '%' . $groupName . '%');
+    });
+}
+
+$users = $usersQuery->paginate(10)->appends($request->all());
+     return view('website.user.seller-list', compact('users', 'districts', 'groups'));
     }
 }
