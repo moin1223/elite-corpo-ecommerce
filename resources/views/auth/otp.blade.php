@@ -12,10 +12,6 @@
             position: relative;
         }
 
-        .container {
-            height: 100vh;
-        }
-
         .mobile-text {
             color: #989696b8;
             font-size: 15px;
@@ -34,7 +30,7 @@
         }
     </style>
 
-    <div class="d-flex justify-content-center align-items-center container">
+    <div class="d-flex justify-content-center align-items-center" style="height: 80vh;">
         <div class="card py-5 px-3">
             <h5 class="m-0">Mobile phone verification</h5>
             <span class="mobile-text">
