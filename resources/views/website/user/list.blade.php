@@ -62,8 +62,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="QA_table mb_30">
-                        <table class="table lms_table_active">
+                    <div class="table-responsive">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Name</th>
@@ -155,8 +155,8 @@
     <script src="{{ asset('website/vendors/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('website/vendors/datatable/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('website/vendors/datatable/js/dataTables.buttons.min.js') }}"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{{-- 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         // In your Javascript (external .js resource or <script> tag)

@@ -29,19 +29,20 @@
                     <div class="ms-2">
                         <a href="{{ route('user-register') }}" class="btn btn-secondary dropbtn-bg">User Sign Up </a>
                         <a href="{{ route('user-login') }}" class="btn btn-secondary dropbtn-bg">User Login</a>
+                        <a href="{{ route('seller-register') }}" class="btn btn-secondary dropbtn-bg">Seller Sign Up </a>
                     </div>
                 </div>
             @endif
         </div>
     </div>
-    <div class="container mt-3 text-center">
+    {{-- <div class="container mt-3 text-center">
         @if (Auth::check())
             <div></div>
         @else
             <a href="{{ route('seller-register') }}" class="btn btn-secondary dropbtn-bg">Seller Sign Up </a>
             <a href="{{ route('login') }}" class="btn btn-secondary dropbtn-bg">Seller Login</a>
         @endif
-    </div>
+    </div> --}}
     <section class=" container">
         <h2 class="fw-bold  my-5 text-center">Check Your Product</h2>
 

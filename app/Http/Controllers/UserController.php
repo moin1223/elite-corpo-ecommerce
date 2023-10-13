@@ -68,8 +68,8 @@ class UserController extends Controller
     }
     public function requestedUser()
     {
-        $requestedUsers = RequestedUser::where('status', 0)->get();
-
+        $requestedUsers = RequestedUser::with('district','group')->where('status', 0)->get();
+        // dd($requestedUsers);
         return view('website.user.requested-user-list', compact('requestedUsers'));
     }
     public function getRequestedUserDetails()
@@ -152,7 +152,7 @@ class UserController extends Controller
         $districtName = $request->input('district');
         $groupName = $request->input('group');
 
-        $usersQuery = UserDetails::with('user', 'district')->where('role', 'seller');
+        $usersQuery = UserDetails::with('user', 'district', 'group')->where('role', 'seller');
 
         // if ($districtName) {
         //     $usersQuery->whereHas('district', function ($query) use ($districtName) {
