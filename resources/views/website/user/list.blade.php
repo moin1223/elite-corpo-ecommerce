@@ -12,27 +12,28 @@
     <div class="col-lg-12">
         <div class="white_card card_height_100 mb_30">
             <div class="white_card_header">
-                <div class="box_header m-0">
-                    <div class="main-title">
+                <div class="box_header m-0 row">
+                    <div class="main-title col-2">
                         <h3 class="m-0">Users</h3>
                     </div>
-                    <div class="serach_field_2">
-                        <div class="">
+                    <div class="serach_field_2 col-10 d-flex justify-content-end">
+                  
                             <form method="GET" action="{{ route('user.index') }}">
                                 @csrf
-                                        <label class="form-label"><span
-                                                class="text-danger font-bold ">*</span></label>
-                                        <select class="js-example-basic-single" name="district" style="hight: 150px; hight: 50px;">
-                                            <option>Select District</option>
-                                            @foreach ($districts as $district)
-                                                <option value="{{ $district->name }}">{{ $district->name }}</option>
-                                            @endforeach
-                                        </select>
-                            
-                                     <button class="btn btn-primary">Search</button>
+                                <div class="district">
+                                    <label class="form-label"><span class="text-danger font-bold ">*</span></label>
+                                    <select class="js-example-basic-single" name="district">
+                                        <option>Select District</option>
+                                        @foreach ($districts as $district)
+                                            <option value="{{ $district->name }}">{{ $district->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                     
+                            <button class="btn btn-primary ms-2 mt-2">Search</button>
                                     </div>
                                     @if (session('message'))
-                                    <p class="text-danger">please select district</p>
+                                    <p class="text-danger d-flex justify-content-end">please select district!</p>
                                     @endif
                                 </div>
                      
@@ -44,7 +45,7 @@
                                     <i class="ti-search"></i>
                                 </button> --}}
                             </form>
-                        </div>
+           
                     </div>
                 </div>
             </div>
@@ -155,8 +156,7 @@
     <script src="{{ asset('website/vendors/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('website/vendors/datatable/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('website/vendors/datatable/js/dataTables.buttons.min.js') }}"></script>
-{{-- 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         // In your Javascript (external .js resource or <script> tag)
