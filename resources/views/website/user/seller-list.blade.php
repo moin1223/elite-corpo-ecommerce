@@ -8,126 +8,121 @@
 @endsection
 
 @section('content')
+    {{-- <style>
+        @media (max-width: 548x) {
+            .group {
+                margin-left: 20px;
+                margin-top: 5px;
+            }
+
+            .district label {
+
+                margin-bottom: 10px;
+            }
+
+
+        }
+    </style> --}}
     {{-- @can('can_add_product') --}}
     <div class="col-lg-12">
         <div class="white_card card_height_100 mb_30">
             <div class="white_card_header">
-                <div class="box_header m-0">
-                    <div class="main-title">
+                <div class="box_header m-0 row">
+                    <div class="main-title col-2">
                         <h3 class="m-0">Users</h3>
                     </div>
-                    <div class="serach_field_2">
-                        <div class="">
-                            <form method="GET" action="{{ route('get-seller-list') }}">
-                                @csrf
+                    <div class="col-10 d-flex justify-content-end">
+                        <form method="GET" action="{{ route('get-seller-list') }}">
+                            @csrf
+                            <div class="district">
+                                <label class="form-label"><span class="text-danger font-bold ">*</span></label>
+                                <select class="js-example-basic-single" name="district">
+                                    <option>Select District</option>
+                                    @foreach ($districts as $district)
+                                        <option value="{{ $district->name }}">{{ $district->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                                <label class="form-label"><span
-                                    class="text-danger font-bold ">*</span></label>
-                            <select class="js-example-basic-single" name="group" style="hight: 200px; hight: 50px;">
-                                <option>Select group</option>
-                                @foreach ($groups as $group)
-                                    <option value="{{ $group->name }}">{{ $group->name }}</option>
-                                @endforeach
-                            </select>
+                            <div class="group">
+                                <label class="form-label mt-2"><span class="text-danger font-bold ">*</span></label>
+                                <select class="js-example-basic-single" name="group" style="width: 145px">
+                                    <option>Select group</option>
+                                    @foreach ($groups as $group)
+                                        <option value="{{ $group->name }}">{{ $group->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-
-                                        <label class="form-label"><span
-                                                class="text-danger font-bold ">*</span></label>
-                                        <select class="js-example-basic-single" name="district" style="hight: 150px; hight: 50px;">
-                                            <option>Select District</option>
-                                            @foreach ($districts as $district)
-                                                <option value="{{ $district->name }}">{{ $district->name }}</option>
-                                            @endforeach
-                                        </select>
-                            
-                                     <button class="btn btn-primary">Search</button>
-                                    </div>
-                                    @if (session('message'))
-                                    <p class="text-danger">please select group or district!</p>
-                                    @endif
-                                </div>
-                     
-
-                                {{-- <div class="search_field">
-                                    <input   name="group_name" type="text" placeholder="Search by group name..." />
-                                </div>
-                                <button type="submit">
-                                    <i class="ti-search"></i>
-                                </button> --}}
-                            </form>
+                            <button class="btn btn-primary ms-2 mt-2">Search</button>
+                        </form>
+                    </div>
+                </div>
+                @if (session('message'))
+                    <p class="text-danger d-flex justify-content-end">please select group or district!</p>
+                @endif
+            </div>
+        </div>
+        <div class="white_card_body">
+            <div class="QA_section">
+                <div class="white_box_tittle list_header">
+                    <div class="box_right d-flex lms_block">
+                        <div class="add_button ms-2">
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="white_card_body">
-                <div class="QA_section">
-                    <div class="white_box_tittle list_header">
-                        {{-- <h4>Users</h4> --}}
-                        <div class="box_right d-flex lms_block">
-                            <div class="add_button ms-2">
-                                {{-- @can('can_add_product') --}}
-                                {{-- <a href="{{ route('category.create') }}" class="btn_1" style="padding: 5px">
-                                    Create
-                                </a> --}}
-                                {{-- @endcan --}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Mobile Number</th>
+                                <th scope="col">District</th>
+                                <th scope="col">Group</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($users as $user)
                                 <tr>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Mobile Number</th>
-                                    <th scope="col">District</th>
-                                    <th scope="col">Group</th>
-                                    <!-- <th scope="col">Requested Role</th> -->
-                                    <th scope="col">Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($users as $user)
-                                    <tr>
-                                        {{-- <th scope="row">{{ $requestedUser->first_name }}</th> --}}
-                                        {{-- <td>{{ $user->first_name }} {{ $user->last_name }}</td> --}}
-                                        <td>
-                                            <a href="{{ route('user.show', $user) }}">
-                                                {{ $user->user->first_name }} {{ $user->user->last_name }}
-                                            </a>
-                                        </td>
-                                        <td>{{ $user->mobile_number }}</td>
-                                        <td>{{$user->district->name  }}</td>
-                                        <td>{{$user->group->name  }}</td>
-                                        {{-- <td>{{ $requestedUser->role }}</td> --}}
+                                    <td>
+                                        <a href="{{ route('user.show', $user) }}">
+                                            {{ $user->user->first_name }} {{ $user->user->last_name }}
+                                        </a>
+                                    </td>
+                                    <td>{{ $user->mobile_number }}</td>
+                                    <td>{{ $user->district->name }}</td>
+                                    <td>{{ $user->group->name }}</td>
+                                    {{-- <td>{{ $requestedUser->role }}</td> --}}
 
 
-                                        <td>
-                                            <div class="d-flex">
-                                                {{-- <a href="" class="action_btn mr_10">
+                                    <td>
+                                        <div class="d-flex">
+                                            {{-- <a href="" class="action_btn mr_10">
                                                     <i class="far fa-view"></i>
                                                 </a> --}}
-                                                @include('website.component.modal.delete-modal', [
-                                                    'route' => 'user.destroy',
-                                                    'id' => $user->id,
-                                                ])
+                                            @include('website.component.modal.delete-modal', [
+                                                'route' => 'user.destroy',
+                                                'id' => $user->id,
+                                            ])
 
-                                            </div>
+                                        </div>
 
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <td colspan="5">No Data</td>
-                                @endforelse
-                            </tbody>
-                        </table>
-                        <div class="mt-2">
-                            {{ $users->links('pagination::bootstrap-5') }}
-                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <td colspan="5">No Data</td>
+                            @endforelse
+                        </tbody>
+                    </table>
+                    <div class="mt-2">
+                        {{ $users->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     {{-- @endcan --}}
     <!-- modal -->
@@ -168,7 +163,7 @@
     <script src="{{ asset('website/vendors/datatable/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('website/vendors/datatable/js/dataTables.buttons.min.js') }}"></script>
 
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         // In your Javascript (external .js resource or <script> tag)

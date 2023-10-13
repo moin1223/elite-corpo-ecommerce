@@ -16,6 +16,7 @@
                     <button class="px-3 px-lg-4 py-2 bg-black text-white rounded fw-bold " type="submit">Submit</button>
                 </div>
             </form>
+            <p class="mt-1">অরিজিনাল পণ্য কিনা যাচাই করুন।</p>
             <p class="mt-5 fs-5">Note: The code can be used only once.
                 The code will appear expired if it has been previously used.</p>
 
@@ -70,5 +71,3 @@
         @endforeach
     </section>
 @endsection
-
-

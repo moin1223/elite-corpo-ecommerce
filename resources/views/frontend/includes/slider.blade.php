@@ -58,10 +58,12 @@
 
                     <input class="w-50 px-5 pe-lg-1  py-2 " type="text" name="product_code" id="product-code"
                         required>
+                 
                     <button class="px-3 px-lg-4 py-2 bg-black text-white rounded fw-bold "
                         id="submitButton">Submit</button>
 
                 </form>
+                <p class="mt-1">অরিজিনাল পণ্য কিনা যাচাই করুন।</p>
             </div>
             <div id="container">
             </div>
