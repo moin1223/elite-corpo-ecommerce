@@ -79,9 +79,10 @@ class AuthImageVideoCoontroller extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AuthImageVideo $data)
+    public function destroy(AuthImageVideo $authImageVideo)
     {
-        $data->delete();
+      
+        $authImageVideo->delete();
         return redirect()->back()->with(['message' => 'Auth image Video  deleted successfully', 'alert-type' => 'success']);
     }
 }

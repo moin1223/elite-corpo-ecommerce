@@ -29,6 +29,7 @@ class ProductRequest extends FormRequest
             'old_price' => 'required',
             'new_price' => 'required',
             'weight' => 'required|string',
+            'description' => 'required',
             'image' => ['nullable', 'required_with:image', File::image()->max(4 * 1024)]
         ];
     }

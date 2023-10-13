@@ -75,6 +75,15 @@
                                 <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Description</label>
+                            <textarea type="text" rows="5" name="description" class="form-control" id="description"
+                                placeholder="Enter product name"
+                                value="{{ old('description') ? old('description') : $product->description }}" required >{{ old('description') ? old('description') : $product->description }}</textarea>
+                            @error('description')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
                         <div class="row mb-3">
                             <div class="col-md-8">
                                 <label class="form-label" for="price">Image</label>

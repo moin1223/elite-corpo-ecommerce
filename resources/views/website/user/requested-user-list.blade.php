@@ -13,9 +13,9 @@
             <div class="white_card_header">
                 <div class="box_header m-0">
                     <div class="main-title">
-                        <h3 class="m-0">Requested User</h3>
+                        <h3 class="m-0">Requested Seller</h3>
                     </div>
-                    <div class="serach_field_2">
+                    {{-- <div class="serach_field_2">
                         <div class="search_inner">
                             <form Active="#">
                                 <div class="search_field">
@@ -26,19 +26,19 @@
                                 </button>
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="white_card_body">
                 <div class="QA_section">
-
-                    <div class="QA_table mb_30">
-                        <table class="table lms_table_active">
+                    <div class="table-responsive">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Requested Role</th>
+                                    <th scope="col">Mobile Number</th>
+                                    <th scope="col">District</th>
+                                    <th scope="col">Group</th>
                                     <th scope="col">Action</th>
 
                                 </tr>
@@ -48,8 +48,9 @@
                                     <tr>
                                         {{-- <th scope="row">{{ $requestedUser->first_name }}</th> --}}
                                         <td>{{ $requestedUser->first_name }} {{ $requestedUser->last_name }}</td>
-                                        <td>{{ $requestedUser->email }}</td>
-                                        <td>{{ $requestedUser->role }}</td>
+                                        <td>{{ $requestedUser->mobile_number }}</td>
+                                        <td>{{ $requestedUser->district->name }}</td>
+                                        <td>{{ $requestedUser->group->name }}</td>
 
 
                                         <td>

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
@@ -21,12 +22,17 @@ class AuthenticatedSessionController extends Controller
     {
         return view('auth.login');
     }
+    public function userLogin()
+    {
+        return view('auth.user-login');
+    }
 
     /**
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+
         // Check the director accept the user
         // $checkIfTheUserIsAccepted = RequestedUser::where([['email', $request->email], ['status', 0]])->first();
         // if ($checkIfTheUserIsAccepted) {

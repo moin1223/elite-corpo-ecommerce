@@ -14,6 +14,7 @@ use App\Models\AuthorizedPartne;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\Thana;
+use App\Models\UserDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -21,6 +22,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Models\Role;
+use Exception;
+use Xenon\LaravelBDSms\Provider\Mobireach;
+use Xenon\LaravelBDSms\Sender;
 
 class RegisteredUserController extends Controller
 {
@@ -43,24 +48,86 @@ class RegisteredUserController extends Controller
             $request->validate([
                 'first_name' => ['required', 'string', 'max:255'],
                 'last_name' => ['required', 'string', 'max:255'],
-                'mobile_number' => ['required'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:' . RequestedUser::class],
+                'mobile_number' => ['required','unique:' . UserDetails::class],
                 'password' => ['required', 'min:6', 'max:100'],
                 'confirm_password' => ['required', 'same:password'],
                 'division_id' => ['required'],
                 'district_id' => ['required'],
+    
+            ]);
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'password' => Hash::make($request->password),
+            ]);
+            $userDetails = UserDetails::create([
+                'gender' => $request->gender,
+                'division_id' => $request->division_id,
+                'district_id' => $request->district_id,
+                'mobile_number' => $request->mobile_number,
+                'role' => $request->role,
+                'user_id' => $user->id,
+            ]);
+            $role = Role::where('name', $user->role)->first();
+    
+            if ($role) {
+                $user->assignRole($role);
+            }
+        //        try {
+        //     $sender = Sender::getInstance();
+        //     $sender->setProvider(Mobireach::class);
+        //     $sender->setMobile($userDetails->mobile_number);
+        //     $sender->setMessage('বিশ্বমানের পণ্য উৎপাদনকারী প্রতিষ্ঠান এলিট কর্পোরেশন এর পক্ষ থেকে আপনাকে জানাই অভিনন্দন। আপনার সন্তুষ্টিই আমাদের সফলতা।');
+        //     $sender->setConfig(
+        //         [
+        //             'Username' => 'elitecor',
+        //             'Password' => '3Kaieschy-78',
+        //             'From' => 'Elite Corpo'
+        //         ]
+        //     );
+        //     $status = $sender->send();
+        // } catch (Exception $e) {
+
+        //     echo 'Error: ' . $e->getMessage();
+        // }
+            return redirect()->back()->with(['successMessage' => 'You are regitered now you can login!', 'alert-type' => 'success']);
+        
+        }
+        if($request->role === 'seller')
+        {
+            $request->validate([
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['required', 'string', 'max:255'],
+                'gender' => ['required'],
+                'division_id' => ['required'],
+                'district_id' => ['required'],
                 'thana_id' => ['required'],
-            ]);
+                'ward_no' => ['required'],
+                'group_id' => ['required'],
+                'mobile_number' => ['required', 'string', 'unique:' . RequestedUser::class],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:' . RequestedUser::class],
+                'whats_app_number' => ['required'],
+                'password' => ['required','min:6','max:100'],
+                'confirm_password' => ['required', 'same:password'],
+                'mobile_number' => ['required'],
+                'monitor_name' => ['required'],
+                'monitor_number' => ['required'],
+                'drector_name' => ['required'],
+                'director_number' => ['required'],
+
+            ]);   
+            $this->createRequestedUser($request);
+
+            $checkIfTheUserIsAccepted = RequestedUser::where([['email', $request->email], ['status', 0]])->first();
+            if ($checkIfTheUserIsAccepted) {
+                throw ValidationException::withMessages([
+                    'confirm_password' => "Account created. Please wait untill the admin accept your request.",
+                ]);
+            }
         }
 
-        $this->createRequestedUser($request);
 
-        $checkIfTheUserIsAccepted = RequestedUser::where([['email', $request->email], ['status', 0]])->first();
-        if ($checkIfTheUserIsAccepted) {
-            throw ValidationException::withMessages([
-                'confirm_password' => "Account created. Please wait untill the admin accept your request.",
-            ]);
-        }
+       
 
         // event(new Registered($user));
         // Auth::login($user);

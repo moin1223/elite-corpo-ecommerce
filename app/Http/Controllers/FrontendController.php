@@ -24,7 +24,7 @@ class FrontendController extends Controller
 {
 
 
-// User Part
+    // User Part
     public function checkAuthenticity()
     {
         $collection = AuthImageVideo::all();
@@ -32,68 +32,72 @@ class FrontendController extends Controller
         return view('frontend.pages.check-authenticity', compact('collection'));
     }
     public function checkCodeAuthenticity(Request $request)
-   {
-    $productCode = ProductCode::where('product_code', $request->product_code)->first();
-    if($productCode)
     {
-        if($productCode->code_search == 0){
-            $productCode->update([
-                'code_search' => 1,
-            ]);
-            return redirect()->route('check-authenticity')->with('message', 'Your product is original');
-           }           
-           if($productCode->code_search == 1){
-            $message = '
+        $productCode = ProductCode::where('product_code', $request->product_code)->first();
+        if ($productCode) {
+            if ($productCode->code_search == 0) {
+                $productCode->update([
+                    'code_search' => 1,
+                ]);
+                return redirect()->route('check-authenticity')->with('message', 'Your product is original');
+            }
+            if ($productCode->code_search == 1) {
+                $message = '
             Your code has expired';
-         
-            // function convertToBengaliNumerals($number)
-            // {
-            //     $bengaliNumerals = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-            //     $westernNumerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-            
-            //     return str_replace($westernNumerals, $bengaliNumerals, $number);
-            // }         
-            $date = Carbon::parse($productCode->updated_at)->locale('bn');
-            $day = $date->format('d');
-            $year = $date->format('Y');
-            $time = $date->format('h:i:s');
-            $month = $date->translatedFormat('F');            
-            $codeExpireDate = "$day $month, $year, $time";
-            return redirect()->route('check-authenticity')->with(compact('message', 'codeExpireDate'));
-           } 
+                $date = Carbon::parse($productCode->updated_at)->locale('bn');
+                $day = $date->format('d');
+                $year = $date->format('Y');
+                $time = $date->format('h:i:s');
+                $month = $date->translatedFormat('F');
+                $codeExpireDate = "$day $month, $year, $time";
+                return redirect()->route('check-authenticity')->with(compact('message', 'codeExpireDate'));
+            }
+        }
+
+        return redirect()->route('check-authenticity')->with('message', 'Your product is not original');
     }
-                
-    // $existsInProductCode = ProductCode::where('product_code', $request->product_code)->exists();
-    // $existsInAllProductCode = AllProductCode::where('product_code', $request->product_code)->exists();
-    // if ($existsInProductCode && $existsInAllProductCode) {
-    //     $productCode = ProductCode::where('product_code', $request->product_code)->get();
-    //     $productCode->each->delete();
-    //     return redirect()->route('check-authenticity')->with('message', 'আপনার প্রোডাক্টটি অরিজিনাল');
+    public function checkCodeAuthenticityAjax(Request $request)
+    {
 
-    // }
-    // if (!$existsInProductCode && $existsInAllProductCode) {
-    //     return redirect()->route('check-authenticity')->with('message', 'আপনার কোডটি মেয়াদ উত্তীর্ণ হয়ে গিয়েছে');
-    // }
-    // else {
-    //     return redirect()->route('check-authenticity')->with('message', 'আপনার প্রোডাক্টটি অরিজিনাল না');
-    // }
-    return redirect()->route('check-authenticity')->with('message', 'Your product is not original');
-   }
+        $productCode = ProductCode::where('product_code', $request->product_code)->first();
+        if ($productCode) {
+            if ($productCode->code_search == 0) {
+                $productCode->update([
+                    'code_search' => 1,
+                ]);
+                return response()->json(['message'=>'Your product is original']);
+            }
+            if ($productCode->code_search == 1) {
+                $message = '
+            Your code has expired';
+                $date = Carbon::parse($productCode->updated_at)->locale('bn');
+                $day = $date->format('d');
+                $year = $date->format('Y');
+                $time = $date->format('h:i:s');
+                $month = $date->translatedFormat('F');
+                $codeExpireDate = "Your code has expired: $day $month, $year, $time";
+                return response()->json(['message'=>$message, 'codeExpireDate' =>$codeExpireDate]);
+            }
+        }
+        return response()->json(['message'=>'Your product is not original']);
+    }
 
 
-    
+
+
 
 
     public function homePage()
     {
-    $products = Category::with('product')->get();
-    $sliders = Slider::all();
-    // dd($products);
-        return view('frontend.pages.home', compact('products','sliders'));
+        $products = Category::with('product')->get();
+        $sliders = Slider::all();
+        $collection = AuthImageVideo::all();
+        // dd($products);
+        return view('frontend.pages.home', compact('products', 'sliders', 'collection'));
     }
 
     public function product()
-    {  
+    {
         $products = Product::all();
         // dd($products);
         return view('frontend.pages.product', compact('products'));
@@ -118,16 +122,20 @@ class FrontendController extends Controller
         $mobile_number = $request->input('mobile_number');
         $userDetails = UserDetails::with('division', 'district', 'thana', 'group')->where('mobile_number', $mobile_number)->first();
         // dd($userDetails);
-        if($userDetails)
-        {
+        if ($userDetails) {
             $user = User::find($userDetails->user_id);
             return view('frontend.pages.seller-details', compact('userDetails', 'user'));
-        }
-        else
-        {
+        } else {
             return redirect()->back()->with('sellerMessage', 'No seller found for given number!');
         }
- 
     }
 
+    public function reseller()
+    {
+        return view('frontend.pages.reseller');
+    }
+    public function ব্যবহারবিধি()
+    {
+        return view('frontend.pages.ব্যবহারবিধি');
+    }
 }

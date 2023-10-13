@@ -43,6 +43,7 @@ class ProductController extends Controller
             'old_price' => $request->old_price,
             'new_price' => $request->new_price,
             'weight' => $request->weight,
+            'description' => $request->description,
             'image' => $image,
             'category_id' => $request->category_id,
         ]);
@@ -84,6 +85,7 @@ class ProductController extends Controller
             'old_price' => $request->old_price,
             'new_price' => $request->new_price,
             'weight' => $request->weight,
+            'description' => $request->description,
             'category_id' => $request->category_id,
             'image' => $image,
         ]);
@@ -97,5 +99,12 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->back()->with(['message' => 'Product deleted successfully', 'alert-type' => 'success']);
+    }
+
+    public function productDetails($productId)
+    {
+        $productDetails = Product::findOrfail($productId);
+        // dd($review);
+        return view('frontend.pages.product-details', compact('productDetails'));
     }
 }

@@ -32,10 +32,14 @@ Route::get('/', function () {
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/check-authenticity', 'checkAuthenticity')->name('check-authenticity');
     Route::post('/check-code-authenticity', 'checkCodeAuthenticity')->name('check-code-authenticity');
+    Route::get('/check-code-authenticity-ajax', 'checkCodeAuthenticityAjax')->name('check-code-authenticity-ajax');
     Route::get('/home-page', 'homePage')->name('home-page');
     Route::get('/products', 'product')->name('product-page');
     Route::get('/contact-us', 'contactUs')->name('contact-us');
     Route::get('/about-us', 'aboutUs')->name('about-us');
+    Route::get('/reseller', 'reseller')->name('reseller');
+    Route::get('/ব্যবহারবিধি', 'ব্যবহারবিধি')->name('ব্যবহারবিধি');
+    Route::get('product/{productId}/details', [ProductController::class, 'productDetails'])->name('product-details');
     Route::get('/authorized-partners', 'getAuthorizedPartbner')->name('authorized-prtbners');
     Route::get('product/{productId}/review', [ReviewController::class, 'productReview'])->name('product-review');
     Route::post('/seller-search', [FrontendController::class, 'sellerSearch'])->name('seller-search');

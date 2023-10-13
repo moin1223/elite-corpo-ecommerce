@@ -13,6 +13,7 @@ class Product extends Model
         'old_price',
         'new_price',
         'weight',
+        'description',
         'category_id',
         'image',
     ];

@@ -71,6 +71,11 @@
                     </div>
                 @endif --}}
                 <div class="col-12 col-lg-6 px-5">
+                    @if (session('successMessage'))
+                    <div class="alert bg-success text-white">
+                        {{ session('successMessage') }} 
+                    </div>
+                @endif
                     <h2>CREATE AN ACCOUNT</h2>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -98,7 +103,8 @@
                                 <label for="last-name" class="d-block text-uppercase mb-2">Mobile Number <span
                                     class="text-danger font-bold">*</span></label>
                                 <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="mobile_number"
-                                    id="" placeholder="Mobile Number" required>
+                                    id="mobile_number" value="88" placeholder="Mobile Number" required>
+                                    <p class="text-danger" id="phone_number_validation_message"></p>
                                     @error('mobile_number')
                                     <p class="text-danger">{{ $message }}</p>
                                    @enderror
@@ -106,24 +112,26 @@
                             <div class="mb-3">
                                 <label for="first-name" class="d-block text-uppercase mb-2">Division <span
                                     class="text-danger font-bold">*</span></label>
-                                <select name="division_id" id="division"
-                                    class="form-select w-100 w-lg-75 px-2 py-3 rounded border border-black border-2"
-                                    aria-label="Default select example">
-                                    <option selected>Select Division</option>
+                                <select name="division_id" id="division" required
+                                class="form-select w-100 w-lg-75 px-2 py-3 rounded border border-black border-2"
+                                aria-label="Default select example">
+                                <option value="">Select Division</option>
+                                @if ($districts)
                                     @foreach ($divisons as $division)
-                                        <option value="{{ $division->id }}">{{ $division->name }}
-                                        </option>
+                                        <option value="{{ $division->id }}">
+                                            {{ $division->name }}</option>
                                     @endforeach
-                                </select>
-                                @error('division_id')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                                @endif
+                            </select>
+                            @error('division_id')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
 
                             </div>
                             <div class="mb-3">
                                 <label for="first-name" class="d-block text-uppercase mb-2">District <span
                                     class="text-danger font-bold">*</span></label>
-                                <select name="district_id" id="district"
+                                <select name="district_id" id="district" required
                                     class="form-select w-100 w-lg-75 px-2 py-3 rounded border border-black border-2"
                                     aria-label="Default select example">
                                     <option value="">Select District</option>
@@ -140,38 +148,10 @@
 
                             </div>
                             <div class="mb-3">
-                                <label for="first-name" class="d-block text-uppercase mb-2">Thana <span
-                                    class="text-danger font-bold">*</span></label>
-                                <select name="thana_id" id="thana"
-                                    class="form-select w-100 w-lg-75 px-2 py-3 rounded border border-black border-2"
-                                    aria-label="Default select example">
-                                    <option value="">Select Thana</option>
-                                    @if ($thanas)
-                                        @foreach ($thanas as $thana)
-                                            <option value="{{ $thana->id }}">{{ $thana->name }}
-                                            </option>
-                                        @endforeach
-                                    @endif
-
-                                </select>
-                                @error('thana_id')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="d-block text-uppercase mb-2">Email <span
-                                    class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="email" name="email" id=""
-                                    placeholder="Email" required>
-                                    @error('email')
-                                    <p class="text-danger">{{ $message }}</p>
-                                   @enderror
-                            </div>
-                            <div class="mb-3">
                                 <label for="email" class="d-block text-uppercase mb-2">Password <span
                                     class="text-danger font-bold">*</span></label>
                                 <input class="w-100 w-lg-75 px-2 py-3 rounded" type="password" name="password"
-                                    id="" placeholder="Password" required>
+                                    id="" placeholder="Enter 6 digit password" required>
                                     @error('password')
                                     <p class="text-danger">{{ $message }}</p>
                                    @enderror
@@ -201,21 +181,36 @@
     </section>
 @endsection
 
-{{-- @section('content-js')
+@section('content-js')
     <script>
-        $(document).ready(() => {
-            $('#image').change(function() {
-                const file = this.files[0];
-                console.log(file);
-                if (file) {
-                    let reader = new FileReader();
-                    reader.onload = function(event) {
-                        console.log(event.target.result);
-                        $('#imgPreview').attr('src', event.target.result);
-                    }
-                    reader.readAsDataURL(file);
+            $('#division').on('change', function() {
+            var division_id = $(this).val();
+            var html = '';
+            $.ajax({
+                url: "{{ route('get-districts') }}",
+                data: {
+                    division_id: division_id,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(data) {
+                    data.forEach(element => {
+                        html += '<option value="' + element.id + '">' + element.text +
+                            '</option>';
+                    });
+                    $('#district').html(html);
                 }
             });
         });
+      $("#mobile_number").keyup(function() {
+            const phoneNumber = $(this).val();
+            const bdPhoneNumberPattern = /^8801\d{9}$/;
+
+            if (bdPhoneNumberPattern.test(phoneNumber)) {
+                $("#phone_number_validation_message").text("")
+            } else {
+                $("#phone_number_validation_message").text(
+                    "Invalid phone number. Please enter a valid Bangladeshi phone number.")
+            }
+        });
     </script>
-@endsection --}}
+@endsection

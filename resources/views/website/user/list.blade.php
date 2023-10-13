@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{ asset('website/vendors/datatable/css/jquery.dataTables.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('website/vendors/datatable/css/responsive.dataTables.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('website/vendors/datatable/css/buttons.dataTables.min.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('content')
@@ -13,18 +14,35 @@
             <div class="white_card_header">
                 <div class="box_header m-0">
                     <div class="main-title">
-                        <h3 class="m-0">All User</h3>
+                        <h3 class="m-0">Users</h3>
                     </div>
                     <div class="serach_field_2">
-                        <div class="search_inner">
+                        <div class="">
                             <form method="GET" action="{{ route('user.index') }}">
                                 @csrf
-                                <div class="search_field">
+                                        <label class="form-label"><span
+                                                class="text-danger font-bold ">*</span></label>
+                                        <select class="js-example-basic-single" name="district" style="hight: 150px; hight: 50px;">
+                                            <option>Select District</option>
+                                            @foreach ($districts as $district)
+                                                <option value="{{ $district->name }}">{{ $district->name }}</option>
+                                            @endforeach
+                                        </select>
+                            
+                                     <button class="btn btn-primary">Search</button>
+                                    </div>
+                                    @if (session('message'))
+                                    <p class="text-danger">please select district</p>
+                                    @endif
+                                </div>
+                     
+
+                                {{-- <div class="search_field">
                                     <input   name="group_name" type="text" placeholder="Search by group name..." />
                                 </div>
                                 <button type="submit">
                                     <i class="ti-search"></i>
-                                </button>
+                                </button> --}}
                             </form>
                         </div>
                     </div>
@@ -33,7 +51,7 @@
             <div class="white_card_body">
                 <div class="QA_section">
                     <div class="white_box_tittle list_header">
-                        <h4>Users</h4>
+                        {{-- <h4>Users</h4> --}}
                         <div class="box_right d-flex lms_block">
                             <div class="add_button ms-2">
                                 {{-- @can('can_add_product') --}}
@@ -44,12 +62,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="QA_table mb_30">
-                        <table class="table lms_table_active">
+                    <div class="table-responsive">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
+                                    <th scope="col">Mobile Number</th>
+                                    <th scope="col">District</th>
                                     <!-- <th scope="col">Requested Role</th> -->
                                     <th scope="col">Action</th>
 
@@ -61,11 +80,12 @@
                                         {{-- <th scope="row">{{ $requestedUser->first_name }}</th> --}}
                                         {{-- <td>{{ $user->first_name }} {{ $user->last_name }}</td> --}}
                                         <td>
-                                        <a href="{{ route('user.show', $user) }}">
-                                            {{ $user->user->first_name }} {{ $user->user->last_name }}
-                                        </a>
-                                    </td>
-                                        <td>{{ $user->user->email }}</td>
+                                            <a href="{{ route('user.show', $user) }}">
+                                                {{ $user->user->first_name }} {{ $user->user->last_name }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $user->mobile_number }}</td>
+                                        <td>{{$user->district->name  }}</td>
                                         {{-- <td>{{ $requestedUser->role }}</td> --}}
 
 
@@ -88,6 +108,10 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        <div class="mt-2">
+                            {{ $users->links('pagination::bootstrap-5') }}
+                        </div>
+   
                     </div>
                 </div>
             </div>
@@ -110,7 +134,8 @@
                                 <div class="text-dark mt-4" id="user-info">
 
                                 </div>
-                                <form method="POST" action="{{route('accept-user-register-request')}}" class="row g-3 mt-3 text-dark">
+                                <form method="POST" action="{{ route('accept-user-register-request') }}"
+                                    class="row g-3 mt-3 text-dark">
                                     @csrf
                                     <input id="user-id" type="hidden" name="user_id">
                                     <div class="col-12">
@@ -130,64 +155,13 @@
     <script src="{{ asset('website/vendors/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('website/vendors/datatable/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('website/vendors/datatable/js/dataTables.buttons.min.js') }}"></script>
+{{-- 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        // In your Javascript (external .js resource or <script> tag)
         $(document).ready(function() {
-            $(document).on('click', '.donation-action', function() {
-
-                const user_id = $(this).attr("data-id");
-                const actionName = $(this).attr("action-name");
-                $('#user-id').val(user_id);
-                $('#exampleModal').modal('show');
-                $.ajax({
-                    url: "{{ route('get-requested-user-details') }}",
-                    data: {
-                        user_id: user_id,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        console.log(response.first_name);
-                        $("#user-info").html(
-                            `
-                                <h6><span class="fw-bold">Name: </span>${response.first_name} ${response.last_name}</h6>
-                                <h6 class="mt-3"><span class="fw-bold">Email Address: </span>${response.email}</h6>
-                                <h6 class="mt-3"><span class="fw-bold"> Requested Role: </span>${response.role}</6>
-                                <h6 class="mt-3"><span class="fw-bold">Monitor Name: </span>${response.monitor_name}</6>
-                                <h6 class="mt-3"><span class="fw-bold">Monitor Number: </span>${response.monitor_number}</6>
-                                <h6 class="mt-3"><span class="fw-bold">Drector Name: </span>${response.drector_name}</6>
-                                <h6 class="mt-3"><span class="fw-bold">Director Number: </span>${response.director_number}</6>
-                                <h6 class="mt-3"><span class="fw-bold">Address: </span>${response.address}</6>                    
-
-                                    `);
-                    }
-                });
-
-            });
+            $('.js-example-basic-single').select2();
         });
-
-        // delete confirmation
-        // $('.show-confirm').click(function(event) {
-        //     // console.log('click')
-        //     let form = $(this).closest('form');
-        //     event.preventDefault()
-
-        //     Swal.fire({
-        //         title: 'Are you sure?',
-        //         text: "You won't be able to revert this!",
-        //         icon: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#3085d6',
-        //         cancelButtonColor: '#d33',
-        //         confirmButtonText: 'Yes, delete it!'
-        //     }).then((result) => {
-        //         if (result.isConfirmed) {
-        //             form.submit()
-        //             Swal.fire(
-        //                 'Deleted!',
-        //                 'Your file has been deleted.',
-        //                 'success'
-        //             )
-        //         }
-        //     })
-        // })
     </script>
 @endsection

@@ -43,8 +43,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="QA_table mb_30">
-                            <table class="table lms_table_active">
+                        <div class="table-responsive">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Name</th>
@@ -62,7 +62,7 @@
                                             <td>{{ $product->old_price }}</td>
                                             <td>{{ $product->new_price }}</td>
                                             <td>{{ $product->weight }}</td>
-                                            <td><img src="{{ $product->image }}" class="w-50 rounded border border-warning">
+                                            <td><img src="{{ $product->image }}" class="w-25 rounded border border-warning">
                                             </td>
                                             <td>
                                                 <div class="action_btns d-flex">

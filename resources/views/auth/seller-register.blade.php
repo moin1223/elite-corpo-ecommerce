@@ -104,7 +104,7 @@
                             <div class="col-md-6">
                                 <p>Gender <span class="text-danger font-bold">*</span></p>
                                 <div class="form-check-inline ">
-                                    <input class="form-check-input" type="radio" name="gender" value="male">
+                                    <input class="form-check-input" type="radio" name="gender" value="male" required>
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         Male
                                     </label>
@@ -201,9 +201,9 @@
                             <div class="mb-3 mt-3">
                                 <label for="last-name" class="d-block text-uppercase mb-2">Mobile Number(Otp) <span
                                         class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="mobile_number" id="mobile_number"
+                                <input class="w-100 w-lg-75 px-2 py-3 rounded mobile_number" type="text" name="mobile_number" value="88"
                                     placeholder="Mobile Number" required>
-                                <p class="text-danger" id="phone_number_validation_message"></p>
+                                <p class="text-danger phone_number_validation_message"></p>
                                 @error('mobile_number')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -211,8 +211,9 @@
                             <div class="mb-3 mt-3">
                                 <label for="whats-app-number" class="d-block text-uppercase mb-2">WhatsApp Number<span
                                         class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="whats_app_number" id=""
+                                <input class="w-100 w-lg-75 px-2 py-3 rounded mobile_number" type="text" name="whats_app_number" id="mobile_number" value="88"
                                     placeholder="Mobile Number" required>
+                                    <p class="text-danger phone_number_validation_message"></p>
                                 @error('whats_app_number')
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
@@ -230,7 +231,7 @@
                             <div class="mb-3">
                                 <label for="last-name" class="d-block text-uppercase mb-2">Monitor Number <span
                                         class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="monitor_number" id=""
+                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="monitor_number" id="" value="88"
                                     placeholder="Monitors Number" required>
                                 @error('monitor_number')
                                     <p class="text-danger">{{ $message }}</p>
@@ -248,7 +249,7 @@
                             <div class="mb-3">
                                 <label for="last-name" class="d-block text-uppercase mb-2">Directors Number <span
                                         class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="director_number" id=""
+                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="text" name="director_number" id="" value="88"
                                     placeholder="Directors  Number" required>
                                 @error('director_number')
                                     <p class="text-danger">{{ $message }}</p>
@@ -266,7 +267,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="d-block text-uppercase mb-2">Password <span class="text-danger font-bold">*</span></label>
-                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="password" name="password" id="" placeholder="Password"
+                                <input class="w-100 w-lg-75 px-2 py-3 rounded" type="password" name="password" id="" placeholder="Enter 6 digit password"
                                     required>
                                 @error('password')
                                     <p class="text-danger">{{ $message }}</p>
@@ -353,14 +354,14 @@
         });
 
         // Validation for phone number in BD
-        $("#mobile_number").keyup(function() {
+        $(".mobile_number").keyup(function() {
             const phoneNumber = $(this).val();
-            const bdPhoneNumberPattern = /^01\d{9}$/;
+            const bdPhoneNumberPattern = /^8801\d{9}$/;
 
             if (bdPhoneNumberPattern.test(phoneNumber)) {
-                $("#phone_number_validation_message").text("")
+                $(".phone_number_validation_message").text("")
             } else {
-                $("#phone_number_validation_message").text(
+                $(".phone_number_validation_message").text(
                     "Invalid phone number. Please enter a valid Bangladeshi phone number.")
             }
         });

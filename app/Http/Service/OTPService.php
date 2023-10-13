@@ -40,6 +40,37 @@ class OTPService
         ]);
     }
 
+    // public function verifyOtp($request)
+    // {
+    //     $REQ_contact_no = '0' . $request->contact_no;
+    //     $REQ_otp = $request->otp;
+    //     $result = false;
+    //     $message = '';
+    //     $storedOtp = OTPGeneration::where([
+    //         ['contact_no', $REQ_contact_no],
+    //         ['otp', $REQ_otp],
+    //     ])->latest()->first();
+
+    //     if ($storedOtp) {
+    //         $now = Carbon::now();
+    //         if ($storedOtp && $now->isBefore($storedOtp->expire_at) && $now->between($storedOtp->created_at, $storedOtp->expire_at)) {
+    //             $result = true;
+    //             $message = "Success";
+    //         } else {
+    //             $result = false;
+    //             $message = "Invalid Otp!!!";
+    //         }
+    //     } else {
+    //         $result = false;
+    //         $message = "Invalid Otp!!!";
+    //     }
+
+    //     return [
+    //         'result' => $result,
+    //         'message' => $message,
+    //         'route' => route('seller-register')
+    //     ];
+    // }
     public function verifyOtp($request)
     {
         $REQ_contact_no = strval($request->contact_no);
