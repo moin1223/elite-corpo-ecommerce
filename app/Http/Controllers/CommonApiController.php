@@ -24,7 +24,7 @@ class CommonApiController extends Controller
     public function getThanas()
     {
         $district_id = request('district_id');
-        $thanas = Thana::where('district_id', $district_id)->limit(15)
+        $thanas = Thana::where('district_id', $district_id)
             ->get()
             ->map(fn ($item) => [
                 'id' => $item->id,

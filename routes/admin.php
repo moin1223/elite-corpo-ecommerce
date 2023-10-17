@@ -11,7 +11,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::group(['middleware' => ['can:accept_request', 'auth']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('check-request', [UserController::class, 'checkRequest'])->name('checkRequest');
     Route::post('accept-registration-request', [UserController::class, 'acceptRegistrationRequest'])->name('acceptRegistrationRequest');
     Route::get('check-edit-request', [UserController::class, 'checkEditRequest'])->name('checkEditRequest');

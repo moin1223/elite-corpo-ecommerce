@@ -59,11 +59,18 @@ class UserController extends Controller
         // dd($userDetails);
         return view('website.user.show', compact('user', 'userDetails'));
     }
-    public function destroy(User $user)
+    public function destroy(UserDetails $user)
     {
-        $user->delete();
-        $userDetails = UserDetails::where('user_id', $user->id)->firstOrfail();
-        $userDetails->delete();
+        if($user->role == 'seller')
+        {
+            $requestedUser = RequestedUser::where('mobile_number', $user->mobile_number)->firstOrfail();
+            $requestedUser->delete();
+            
+        }
+        $userDelete = User::findOrfail($user->user_id);
+        $userDelete->delete();
+        $UesrDetailsDelete = $user->delete();
+
         return redirect()->back()->with(['message' => 'User deleted successfully', 'alert-type' => 'success']);
     }
     public function requestedUser()

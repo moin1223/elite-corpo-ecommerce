@@ -16,7 +16,7 @@
                     </div>
                 @endif
             <form method="POST" action="{{ route('login') }}">
-                @csrf
+                {{ csrf_field() }}
             <div class="mb-4">
                 <label for="email" class="d-block text-uppercase mb-2">Email</label>
                 <input class="w-100 w-lg-75 px-2 py-3 rounded" type="email" name="loginCred" id="" placeholder="Email">

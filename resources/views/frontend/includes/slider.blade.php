@@ -44,14 +44,12 @@
         @endif
     </div> --}}
     <section class=" container">
-        <h2 class="fw-bold  my-5 text-center">Check Your Product</h2>
+        {{-- <h2 class="fw-bold  my-5 text-center">Check Your Product</h2>
 
         <div class="pt-5 px-1 px-lg-5">
             <h4 class="fs-4 mb-4">Check if your product is original</h4>
             <p class="fs-5">Behind the product you have a 8 digit code.
                 Enter the 8 digit security code here.</p>
-            {{-- <form method="POST" action="{{ route('check-code-authenticity') }}">
-                @csrf --}}
 
             <div class="mt-3 ">
                 <form action="">
@@ -70,6 +68,26 @@
             <p class="mt-5 fs-5">Note: The code can be used only once.
                 The code will appear expired if it has been previously used.</p>
 
+        </div> --}}
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 shadow p-4 rounded">
+                    <h4 class="fs-4 mb-4">Check if your product is original</h4>
+                    <p class="fs-5">Behind the product, you have an 8-digit code. Enter the 8-digit security code here.</p>
+
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="product_code" id="product-code" required>
+                        </div>
+                        <button class="btn btn-dark mt-3" id="submitButton">Submit</button>
+                    <div class="rounded bg-primary">
+                        <p class="mt-3 text-white p-2">অরিজিনাল পণ্য কিনা যাচাই করুন।</p>
+                    </div>
+                    <div id="container">
+                    </div>
+         
+                    <p class="mt-3 fs-5">Note: The code can be used only once. The code will appear expired if it has been previously used.</p>
+                </div>
+            </div>
         </div>
         @foreach ($collection as $item)
             <div class="row p-2 p-lg-5">
@@ -106,27 +124,27 @@
                     },
                     success: function(response) {
                         console.log(response);
-                        if (response.message == 'Your product is not original') {
+                        if (response.message == 'আপনার প্রোডাক্টটি অরিজিনাল না') {
                             if ($('#container').children().length > 0) {
                                 // Remove all child elements from #container
                                 $('#container').empty();
                             }
                             var newChild =
-                                '<div class= "mt-3 alert bg-danger text-white">Your product is not original</div>';
+                                '<div class= "mt-3 alert bg-danger text-white">আপনার প্রোডাক্টটি অরিজিনাল না</div>';
                             $('#container').append(newChild);
                         }
 
-                        if (response.message == 'Your product is original') {
+                        if (response.message == 'আপনার প্রোডাক্টটি অরিজিনাল') {
                             if ($('#container').children().length > 0) {
                                 // Remove all child elements from #container
                                 $('#container').empty();
                             }
                             var newChild =
-                                '<div class="mt-3 alert  bg-success text-white">Your product is original.</div>';
+                                '<div class="mt-3 alert  bg-success text-white">আপনার প্রোডাক্টটি অরিজিনাল</div>';
                             $('#container').append(newChild);
                         }
-                        if (response.message != 'Your product is not original' && response
-                            .message != 'Your product is original') {
+                        if (response.message != 'আপনার প্রোডাক্টটি অরিজিনাল না' && response
+                            .message != 'আপনার প্রোডাক্টটি অরিজিনাল') {
                             if ($('#container').children().length > 0) {
                                 // Remove all child elements from #container
                                 $('#container').empty();

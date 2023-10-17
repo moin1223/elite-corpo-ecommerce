@@ -82,7 +82,7 @@
                                         {{-- <td>{{ $user->first_name }} {{ $user->last_name }}</td> --}}
                                         <td>
                                             <a href="{{ route('user.show', $user) }}">
-                                                {{ $user->user->first_name }} {{ $user->user->last_name }}
+                                                {{ $user->user?->first_name }} {{ $user->user?->last_name }}
                                             </a>
                                         </td>
                                         <td>{{ $user->mobile_number }}</td>
