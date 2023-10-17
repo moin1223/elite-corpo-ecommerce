@@ -34,30 +34,45 @@ class FrontendController extends Controller
     public function checkCodeAuthenticity(Request $request)
     {
         $productCode = ProductCode::where('product_code', $request->product_code)->first();
-        if ($productCode) {
-            if ($productCode->code_search == 0) {
-                $productCode->update([
-                    'code_search' => 1,
-                ]);
-                return redirect()->route('check-authenticity')->with('message', 'Your product is original');
-            }
-            if ($productCode->code_search == 1) {
-                $message = '
-            Your code has expired';
-                $date = Carbon::parse($productCode->updated_at)->locale('bn');
-                $day = $date->format('d');
-                $year = $date->format('Y');
-                $time = $date->format('h:i:s');
-                $month = $date->translatedFormat('F');
-                $codeExpireDate = "$day $month, $year, $time";
-                return redirect()->route('check-authenticity')->with(compact('message', 'codeExpireDate'));
-            }
-        }
-
-        return redirect()->route('check-authenticity')->with('message', 'Your product is not original');
+    if($productCode)
+    {
+        if($productCode->code_search == 0){
+            $productCode->update([
+                'code_search' => 1,
+            ]);
+            return redirect()->route('check-authenticity')->with('message', 'আপনার প্রোডাক্টটি অরিজিনাল');
+           }           
+           if($productCode->code_search == 1){
+            $message = 'আপনার কোডটি মেয়াদ উত্তীর্ণ হয়ে গিয়েছে';
+         
+            function convertToBengaliNumerals($number)
+            {
+                $bengaliNumerals = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+                $westernNumerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            
+                return str_replace($westernNumerals, $bengaliNumerals, $number);
+            }         
+            $date = Carbon::parse($productCode->updated_at)->locale('bn');
+            $day = convertToBengaliNumerals($date->format('d'));
+            $year = convertToBengaliNumerals($date->format('Y'));
+            $time = convertToBengaliNumerals($date->format('h:i:s'));
+            $month = $date->translatedFormat('F');            
+            $codeExpireDate = "$day $month, $year, $time";
+            return redirect()->route('check-authenticity')->with(compact('message', 'codeExpireDate'));
+           } 
+    }
+                
+    return redirect()->route('check-authenticity')->with('message', 'আপনার প্রোডাক্টটি অরিজিনাল না');
     }
     public function checkCodeAuthenticityAjax(Request $request)
     {
+        function convertToBengaliNumerals($number)
+        {
+            $bengaliNumerals = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+            $westernNumerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        
+            return str_replace($westernNumerals, $bengaliNumerals, $number);
+        } 
 
         $productCode = ProductCode::where('product_code', $request->product_code)->first();
         if ($productCode) {
@@ -65,21 +80,27 @@ class FrontendController extends Controller
                 $productCode->update([
                     'code_search' => 1,
                 ]);
-                return response()->json(['message'=>'Your product is original']);
+                return response()->json(['message'=>'আপনার প্রোডাক্টটি অরিজিনাল']);
             }
             if ($productCode->code_search == 1) {
                 $message = '
-            Your code has expired';
+                আপনার কোডটি মেয়াদ উত্তীর্ণ হয়ে গিয়েছে';
+                // $date = Carbon::parse($productCode->updated_at)->locale('bn');
+                // $day = $date->format('d');
+                // $year = $date->format('Y');
+                // $time = $date->format('h:i:s');
+                // $month = $date->translatedFormat('F');
+                // $codeExpireDate = "Your code has expired: $day $month, $year, $time";
                 $date = Carbon::parse($productCode->updated_at)->locale('bn');
-                $day = $date->format('d');
-                $year = $date->format('Y');
-                $time = $date->format('h:i:s');
-                $month = $date->translatedFormat('F');
-                $codeExpireDate = "Your code has expired: $day $month, $year, $time";
+                $day = convertToBengaliNumerals($date->format('d'));
+                $year = convertToBengaliNumerals($date->format('Y'));
+                $time = convertToBengaliNumerals($date->format('h:i:s'));
+                $month = $date->translatedFormat('F');            
+                $codeExpireDate = "আপনার কোডটি মেয়াদ উত্তীর্ণ হয়ে গিয়েছে: $day $month, $year, $time";
                 return response()->json(['message'=>$message, 'codeExpireDate' =>$codeExpireDate]);
             }
         }
-        return response()->json(['message'=>'Your product is not original']);
+        return response()->json(['message'=>'আপনার প্রোডাক্টটি অরিজিনাল না']);
     }
 
 

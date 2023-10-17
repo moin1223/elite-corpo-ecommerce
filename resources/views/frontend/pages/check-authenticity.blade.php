@@ -5,53 +5,40 @@
     <section class=" container">
         <h2 class="fw-bold  my-5 text-center">Check Your Product</h2>
 
-        <div class="pt-5 px-1 px-lg-5">
-            <h4 class="fs-4 mb-4">Check if your product is original</h4>
-            <p class="fs-5">Behind the product you have a 8 digit code.
-                Enter the 8 digit security code here.</p>
-            <form method="POST" action="{{ route('check-code-authenticity') }}">
-                @csrf
-                <div class="mt-3 ">
-                    <input class="w-50 px-5 pe-lg-1  py-2 " type="text" name="product_code" id="">
-                    <button class="px-3 px-lg-4 py-2 bg-black text-white rounded fw-bold " type="submit">Submit</button>
-                </div>
-            </form>
-            <p class="mt-1">অরিজিনাল পণ্য কিনা যাচাই করুন।</p>
-            <p class="mt-5 fs-5">Note: The code can be used only once.
-                The code will appear expired if it has been previously used.</p>
-
-
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 shadow p-4 rounded">
+                    <h4 class="fs-4 mb-4">Check if your product is original</h4>
+                    <p class="fs-5">Behind the product, you have an 8-digit code. Enter the 8-digit security code here.</p>
+                    <form method="POST" action="{{ route('check-code-authenticity') }}">
+                        @csrf
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="product_code" id="product-code" required>
+                        </div>
+                        <button type="submit" class="btn btn-dark mt-3" >Submit</button>
+                    <div class="rounded bg-primary">
+                        <p class="mt-3 text-white p-2">অরিজিনাল পণ্য কিনা যাচাই করুন।</p>
+                    </div>
+                </form>
+                    @if (session('message'))
+                    <div
+                        class="alert 
+                          @if (session('message') === 'আপনার প্রোডাক্টটি অরিজিনাল না') bg-danger text-white)
+                          @elseif(session('message') === 'আপনার প্রোডাক্টটি অরিজিনাল') 
     
-            @if (session('message'))
-                <div
-                    class="alert 
-                      @if (session('message') === 'Your product is not original') bg-danger text-white)
-                      @elseif(session('message') === 'Your product is original') 
-
-                  bg-success text-white
-                  @else 
-                 bg-warning @endif 
-                 message">
-                    {{ session('message') }}
-                    {{ session('codeExpireDate') }}
+                      bg-success text-white
+                      @else 
+                     bg-warning @endif 
+                     message">
+                        {{ session('message') }}
+                        {{ session('codeExpireDate') }}
+                    </div>
+                @endif
+    
+         
+                    <p class="mt-3 fs-5">Note: The code can be used only once. The code will appear expired if it has been previously used.</p>
                 </div>
-            @endif
-
-
-            {{-- <p class="text-center mt-5 border py-4 bg-success rounded w-100 mx-auto text-white fs-6">Your product is
-                original
-            </p>
-
-
-            <p class="text-center mt-5 border py-4 bg-primary rounded w-100 mx-auto text-white fs-6">Your product is not
-                original</p> --}}
-
-
-
-
-
-
-
+            </div>
         </div>
         @foreach ($collection as $item)
         <div class="row p-2 p-lg-5">

@@ -81,7 +81,7 @@
                         </div>
                     @endif --}}
                     <form method="POST" action="{{ route('register-seller') }}">
-                        @csrf
+                        {{ csrf_field() }}
                         <input type="hidden" name="role" value="seller">
                         <div class="fw-bold mt-5">
                             <div class="mb-3">
@@ -336,6 +336,7 @@
 
         $('#district').on('change', function() {
             var district_id = $(this).val();
+            console.log(district_id);
             var html = '';
             $.ajax({
                 url: "{{ route('get-thanas') }}",

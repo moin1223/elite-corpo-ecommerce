@@ -71,6 +71,7 @@
                         Authorized Partner
                     </a>
                 </li>
+                @if (Auth::check())
                 <li class="nav-item mx-3 mx-lg-2 fs-lg-5">
                     <a href="{{ route('reseller') }}" class="nav-link">
                         Reseller
@@ -81,6 +82,7 @@
                         ব্যবহারবিধি
                     </a>
                 </li>
+                @endif
                 @isset($products)
                     <li class="nav-item mx-3 mx-lg-2 fs-lg-5">
                         <a href="#products" class="nav-link">

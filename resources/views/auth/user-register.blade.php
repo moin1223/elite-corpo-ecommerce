@@ -78,7 +78,7 @@
                 @endif
                     <h2>CREATE AN ACCOUNT</h2>
                     <form method="POST" action="{{ route('register') }}">
-                        @csrf
+                        {{ csrf_field() }}
                         <input type="hidden" name="role" value="user">
                         <div class="fw-bold mt-5">
                             <div class="mb-3">

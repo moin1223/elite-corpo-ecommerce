@@ -21,7 +21,7 @@
                     </div>
                 @endif --}}
             <form method="POST" action="{{ route('user-login-store') }}">
-                @csrf
+                {{ csrf_field() }}
                 <input type="hidden" name="role" value="user">
             <div class="mb-4">
                 <label for="phone" class="d-block text-uppercase mb-2">Mobile Number</label>
